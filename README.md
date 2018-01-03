@@ -4,7 +4,7 @@ Hub Wallet is a project that aims to assemble the most comprehensive set of cryp
 
 The aim is 3 fold: 
 
-1 - Allow users to enter price of purchas and purchase amount and track users gains/losses based on price per coin or token at purchase. 
+1 - Allow users to enter price of purchase and purchase amount and track users gains/losses based on price per coin or token at purchase. 
 
 2 - Allow users to track their portfolio growth with information about ROI, daily growth, and more. 
 
