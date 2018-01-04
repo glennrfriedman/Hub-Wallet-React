@@ -8,18 +8,18 @@ import './dist/toolkit-light.min.css';
 
 class App extends Component {
 
-  constructor(props){
-    super(props)
-  }
+  // constructor(props){
+  //   super(props)
+  // }
 
 
   render() {
     return (
       <div className="App">
         <Sidebar />
-        <Coincard rowName='Current Holdings' />
-        <Coincard rowName='Return on Investment' />
-        <Coincard rowName='Daily Growth'/>
+        <Coincard rowName='Current Holdings' coin='bitcoin' />
+        <Coincard rowName='Return on Investment' coin='ethereum' />
+        <Coincard rowName='Daily Growth' coin='eos'/>
       </div>
     
     );
