@@ -4,6 +4,10 @@ class Sidebar extends Component {
 
 	render(){
 
+    const logoStlye = {
+      alignSelf: "center"
+    }
+
 		return (
 
 			<div className="col-md-3 sidebar">
@@ -12,14 +16,14 @@ class Sidebar extends Component {
             <button className="nav-toggler nav-toggler-md sidebar-toggler" type="button" data-toggle="collapse" data-target="#nav-toggleable-md">
               <span className="sr-only">Toggle nav</span>
             </button>
-            <a className="sidebar-brand img-responsive" href="index.html">
-              <span className="icon icon-wallet sidebar-brand-icon"><span style={{marginRight: 1 + 'em'}}>Hub</span></span>
+            <a style={logoStlye} className="sidebar-brand img-responsive" href="index.html">
+              <span className="icon icon-wallet sidebar-brand-icon"><span>Hub</span></span>
             </a>
           </div>
 
           <div className="collapse nav-toggleable-md" id="nav-toggleable-md">
             <form className="sidebar-form">
-              <input className="form-control" type="text" placeholder="Search..."></input>
+              <input className="form-control" type="text" placeholder="Search Coins..."></input>
               <button type="submit" className="btn-link">
                 <span className="icon icon-magnifying-glass"></span>
               </button>

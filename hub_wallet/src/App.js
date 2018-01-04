@@ -1,10 +1,10 @@
+// importing dependencies
 import React, { Component } from 'react';
-
-import Sidebar from './Components/Sidebar';
-import Coincard from './Components/Coincard';
-
+import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import './dist/toolkit-light.min.css';
+// importing components
+import Hub from './Components/Hub';
 
 class App extends Component {
   
@@ -22,13 +22,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Sidebar />
-        <Coincard rowName='Current Holdings' coin='bitcoin' />
-        <Coincard rowName='Return on Investment' coin='ethereum' />
-        <Coincard rowName='Daily Growth' coin='eos'/>
-      </div>
-    
+      <BrowserRouter>
+        <Route path="/" render={props => <Hub {...props}/>} />
+      </BrowserRouter>    
     );
   }
 }
