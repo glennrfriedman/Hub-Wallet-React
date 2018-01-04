@@ -1,8 +1,10 @@
 // importing dependencies
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import './App.css';
-import './dist/toolkit-light.min.css';
+import './docs/assets/css/toolkit-light.css';
+import './docs/assets/css/docs.css';
+import './docs/assets/css/application.css';
+
 // importing components
 import Hub from './Components/Hub';
 

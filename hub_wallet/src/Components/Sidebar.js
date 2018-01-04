@@ -9,7 +9,7 @@ class Sidebar extends Component {
     }
 
 		return (
-
+      <div className="row">
 			<div className="col-md-3 sidebar">
         <nav className="sidebar-nav">
           <div className="sidebar-header">
@@ -43,6 +43,7 @@ class Sidebar extends Component {
             <hr className="visible-xs mt-3"></hr>
           </div>
         </nav>
+      </div>
       </div>
 	
 		)
