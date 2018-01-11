@@ -19,7 +19,7 @@ class Coincard extends Component {
 	getData() {
 		const query = `
     	{
-				getDataByCoin(coin: "eos"){
+				getDataByCoin(coin: "${this.props.coin}"){
 			  		price_usd
 			    	market_cap
 			  		hour_change
@@ -29,7 +29,7 @@ class Coincard extends Component {
 		}`
   		console.log('query is ', query);
 			request('https://api.graph.cool/simple/v1/cjc6hz8or02xe0103b9kg3w7z', query)
-				.then(data => console.log(data))
+				.then(data => this.setState({data: data.getDataByCoin}))
 		}
 
 	// getData() {
@@ -41,7 +41,7 @@ class Coincard extends Component {
 	// }
 
 	render(){
-		console.log('data in redner is', this.state.data.price_usd )
+		console.log('data in redner is', this.state.data )
 		const statcardStyle = {
 			display: "block",
 			overflow: "hidden", 
@@ -66,10 +66,10 @@ class Coincard extends Component {
 		<div className="col-md-6 col-xl-3 mb-3 mb-md-4 mb-xl-0">
     <div className="statcard statcard-danger"><iframe title="coinCard" className="chartjs-hidden-iframe" tabIndex="-1" style={statcardStyle}></iframe>
       <div className="p-3">
-        <span className="statcard-desc">Downloads</span>
+        <span className="statcard-desc">{this.props.coin}</span>
         <h2 className="statcard-number">
-          758
-          <small className="delta-indicator delta-negative">1.3%</small>
+          {this.state.data.price_usd}
+          <small className="delta-indicator delta-negative">{this.state.data.hour_change}</small>
         </h2>
         <hr className="statcard-hr mb-0"></hr>
       </div>

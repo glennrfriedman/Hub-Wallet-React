@@ -10,6 +10,8 @@ class Hub extends Component {
 			<div className="cointaner">
         <Sidebar />
         <Coincard rowName='Daily Growth' coin='eos'/>
+        <Coincard rowName='Daily Growth' coin='bitcoin'/>
+        <Coincard rowName='Daily Growth' coin='ethereum'/>
       </div>
 		)
 	}
