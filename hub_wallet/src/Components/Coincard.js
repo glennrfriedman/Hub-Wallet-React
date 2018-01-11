@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 // import Websocket from 'react-websocket';
-import axios from 'axios';
-import Chart from 'chart.js';
+// import axios from 'axios';
+// import Chart from 'chart.js';
+import { request } from 'graphql-request';
 
 class Coincard extends Component {
 
@@ -16,12 +17,28 @@ class Coincard extends Component {
 	}	
 
 	getData() {
-		axios.get(`https://api.coinmarketcap.com/v1/ticker/${this.props.coin}/?convert=USD`)
-			.then(res => {
-				console.log('data from req is', res.data)
-				this.setState({ data: res.data[0] })
-			})
-	}
+		const query = `
+    	{
+				getDataByCoin(coin: "eos"){
+			  		price_usd
+			    	market_cap
+			  		hour_change
+			  		day_change
+			  		week_change
+			}  
+		}`
+  		console.log('query is ', query);
+			request('https://api.graph.cool/simple/v1/cjc6hz8or02xe0103b9kg3w7z', query)
+				.then(data => console.log(data))
+		}
+
+	// getData() {
+	// 	axios.get(`https://api.coinmarketcap.com/v1/ticker/${this.props.coin}/?convert=USD`)
+	// 		.then(res => {
+	// 			console.log('data from req is', res.data)
+	// 			this.setState({ data: res.data[0] })
+	// 		})
+	// }
 
 	render(){
 		console.log('data in redner is', this.state.data.price_usd )
