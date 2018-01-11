@@ -56,11 +56,6 @@ class Coincard extends Component {
 			position: "absolute", 
 			zIndex: -1
 		}
-		const sparkStyle = {
-			width: 310 + "px", 
-			height: 77 + "px",
-			display: "block"
-		}
 
 		return(
 		<div className="col-md-6 col-xl-3 mb-3 mb-md-4 mb-xl-0">
@@ -73,7 +68,6 @@ class Coincard extends Component {
         </h2>
         <hr className="statcard-hr mb-0"></hr>
       </div>
-      <canvas id="sparkline1" width="620" height="154" className="sparkline js-chart-drawn" data-chart="spark-line" data-dataset="[[4,34,64,27,96,50,80]]" data-labels="['a','b','c','d','e','f','g']" style={sparkStyle}></canvas>
     </div>
   </div>
 		)
