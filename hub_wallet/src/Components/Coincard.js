@@ -8,7 +8,7 @@ class Coincard extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = { rowName: this.props.rowName, data: {} }
+		this.state = { rowName: this.props.rowName, data: {}, dataReceived: false }
 		this.getData = this.getData.bind(this);
 	}
 
@@ -29,7 +29,7 @@ class Coincard extends Component {
 		}`
   		console.log('query is ', query);
 			request('https://api.graph.cool/simple/v1/cjc6hz8or02xe0103b9kg3w7z', query)
-				.then(data => this.setState({data: data.getDataByCoin}))
+				.then(data => this.setState({data: data.getDataByCoin, dataReceived: true}))
 		}
 
 	// getData() {
@@ -41,7 +41,9 @@ class Coincard extends Component {
 	// }
 
 	render(){
-		console.log('data in redner is', this.state.data )
+		if (this.state.dataReceived === true) {
+			console.log('data in redner is', this.state.data )
+		}
 		const statcardStyle = {
 			display: "block",
 			overflow: "hidden", 

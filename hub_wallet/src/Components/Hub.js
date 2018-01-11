@@ -1,9 +1,51 @@
 import React, { Component } from 'react';
+import { request } from 'graphql-request';
 
 import Sidebar from './Sidebar';
 import Coincard from './Coincard';
 
 class Hub extends Component { 
+
+	constructor(props){
+		super(props)
+		this.state = { coinList: [], dataReceived: false }
+		this.renderCoinCards = this.renderCoinCards.bind(this);
+	}
+
+	componentDidMount(){
+		this.getData();
+	}	
+
+	getData() {
+		const query = `{
+  		allCoins{
+		    coinName
+		  	id
+		  	coinId
+		  	investment
+		  	shares
+		  	user {
+		  	  id
+		  	}
+  		}
+		}`
+  	console.log('query is ', query);
+			request('https://api.graph.cool/simple/v1/cjc6hz8or02xe0103b9kg3w7z', query)
+				.then(data => this.setState({coinList: data.allCoins, dataReceived: true}))
+		}
+
+		renderCoinCards(){
+			const renderCoins = [];
+			if (this.state.dataReceived === true) {
+				this.state.coinList.map(e => {
+					renderCoins.push(
+						<Coincard key={e.id} coin={e.coinId}/>
+					)
+					return renderCoins
+				})
+			}
+				return renderCoins
+			} 
 
 	// steps to render all coins 
 
@@ -16,16 +58,13 @@ class Hub extends Component {
 	// create .map function that will return <Coincard coin={coinId}> for all saved coins a user has 
 
 	render(){
+		if (this.state.dataReceived === true) {
+			console.log('coinlist is ', this.state.coinList)
+		}
 		return (
 			<div className="cointaner">
         <Sidebar />
-        <Coincard coin='eos'/>
-        <Coincard coin='bitcoin'/>
-        <Coincard coin='ethereum'/>
-        <Coincard coin='golem'/>
-        <Coincard coin='bitcoin-cash'/>
-        <Coincard coin='funfair'/>
-        <Coincard coin='litecoin'/>
+        {this.renderCoinCards()}
       </div>
 		)
 	}
