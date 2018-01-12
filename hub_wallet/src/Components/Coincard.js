@@ -12,6 +12,8 @@ class Coincard extends Component {
 		this.getData = this.getData.bind(this);
 	}
 
+	// test for git
+
 	componentDidMount(){
 		this.getData();
 	}	
