@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // import axios from 'axios';
 // import Chart from 'chart.js';
 import { request } from 'graphql-request';
+import commaNumber from 'comma-number';
 
 class Coincard extends Component {
 
@@ -67,7 +68,7 @@ class Coincard extends Component {
       <div className="p-3">
         <span className="statcard-desc">{this.props.coin}</span>
         <h2 className="statcard-number">
-          {this.state.data.price_usd}
+          ${commaNumber(this.state.data.price_usd)}
           <small className="delta-indicator delta-negative">{this.state.data.hour_change}</small>
         </h2>
         <hr className="statcard-hr mb-0"></hr>
