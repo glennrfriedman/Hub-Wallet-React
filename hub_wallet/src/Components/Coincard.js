@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import Websocket from 'react-websocket';
-// import axios from 'axios';
+import axios from 'axios';
 // import Chart from 'chart.js';
-import { request } from 'graphql-request';
+// import { request } from 'graphql-request';
 import commaNumber from 'comma-number';
 
 class Coincard extends Component {
@@ -20,19 +20,9 @@ class Coincard extends Component {
 	}	
 
 	getData() {
-		const query = `
-    	{
-				getDataByCoin(coin: "${this.props.coin}"){
-			  		price_usd
-			    	market_cap
-			  		hour_change
-			  		day_change
-			  		week_change
-			}  
-		}`
-  		console.log('query is ', query);
-			request('https://api.graph.cool/simple/v1/cjc6hz8or02xe0103b9kg3w7z', query)
-				.then(data => this.setState({data: data.getDataByCoin, dataReceived: true}))
+		let searchTerm = 'bit'
+		axios.get(`http://localhost:8080/api/search/${searchTerm}`)
+				.then(res => this.setState({data: res.data.searchResults, dataReceived: true}))
 		}
 
 	// getData() {
@@ -68,8 +58,8 @@ class Coincard extends Component {
       <div className="p-3">
         <span className="statcard-desc">{this.props.coin}</span>
         <h2 className="statcard-number">
-          ${commaNumber(this.state.data.price_usd)}
-          <small className="delta-indicator delta-negative">{this.state.data.hour_change}</small>
+          {/*${commaNumber(this.state.data.price_usd)}*/}
+          <small className="delta-indicator delta-negative"></small>
         </h2>
         <hr className="statcard-hr mb-0"></hr>
       </div>
