@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 
 class Sidebar extends Component {
 
-	render(){
+  render(){
 
     const logoStlye = {
       alignSelf: "center"
     }
 
-		return (
+    return (
       <div className="row">
-			<div className="col-md-3 sidebar">
+      <div className="col-md-3 sidebar">
         <nav className="sidebar-nav">
           <div className="sidebar-header">
             <button className="nav-toggler nav-toggler-md sidebar-toggler" type="button" data-toggle="collapse" data-target="#nav-toggleable-md">
@@ -27,7 +27,7 @@ class Sidebar extends Component {
               <button type="submit" className="btn-link">
                 <span className="icon icon-magnifying-glass"></span>
               </button>
-            	</form>
+              </form>
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">Portfolio</li>
               <li className="nav-item">
@@ -45,9 +45,9 @@ class Sidebar extends Component {
         </nav>
       </div>
       </div>
-	
-		)
-	}
+  
+    )
+  }
 
 }
 

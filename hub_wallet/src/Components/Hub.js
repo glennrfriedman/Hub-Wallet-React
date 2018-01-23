@@ -10,31 +10,14 @@ class Hub extends Component {
 		super(props)
 		this.state = { dataReceived: false }
 		this.renderCoinCards = this.renderCoinCards.bind(this);
-		// this.onSignIn = this.onSignIn.bind(this);
-		// this.signOut = this.signOut.bind(this);
 	}
 
 	componentDidMount(){
 		this.getData();
 	}	
 
-	// onSignIn(googleUser) {
- //  	let profile = googleUser.getBasicProfile();
- //  	console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
- //  	console.log('Name: ' + profile.getName());
- //  	console.log('Image URL: ' + profile.getImageUrl());
- //  	console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-	// }
-
-	// signOut() {
- //    let auth2 = gapi.auth2.getAuthInstance();
- //    auth2.signOut().then(function () {
- //      console.log('User signed out.');
- //    });
- //  }	
-
 	getData() {
-			axios.get('http://localhost:8080/api/coins')
+			axios.get(`http://localhost:8080/api/${this.props.user.id}/coins`)
 				.then(data => this.setState({savedCoinData: data.data.savedCoins, currentCoinData: data.data.currentCoinData, dataReceived: true}))
 		}
 
