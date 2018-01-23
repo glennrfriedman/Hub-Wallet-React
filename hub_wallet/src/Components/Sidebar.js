@@ -160,9 +160,6 @@ class Sidebar extends Component {
     }
 
     return (
-      <div className="container">
-      <div>
-      <div className="row">
       <div className="col-md-3 sidebar">
         <nav className="sidebar-nav">
           <div className="sidebar-header">
@@ -197,10 +194,6 @@ class Sidebar extends Component {
           </div>
         </nav>
       </div>
-      </div>
-    </div>
-    <Addcoin />
-    </div>
     )
   }
 

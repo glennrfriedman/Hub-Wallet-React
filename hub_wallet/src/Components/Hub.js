@@ -23,14 +23,15 @@ class Hub extends Component {
 
 		renderCoinCards(){
 			const renderCoins = [];
-			// if (this.state.dataReceived === true) {
-			// 	this.state.savedCoins.map(e => {
-			// 		renderCoins.push(
-			// 			<Coincard key={e.id} coin={e.coinId}/>
-			// 		)
-			// 		return renderCoins
-			// 	})
-			// }
+			let delta = '';
+			if (this.state.dataReceived === true) {
+				this.state.currentCoinData.map(e => {
+					renderCoins.push(
+						<Coincard key={e.id} coin={e.coinId} data={e[0]} />
+					)
+					return renderCoins
+				})
+			}
 				return renderCoins
 			} 
 
@@ -51,10 +52,12 @@ class Hub extends Component {
 		}
 		return (
 			<div className="cointaner">
+			 <div className="row">
         <Sidebar user={this.props.user} url={this.props.url}/>
-        {/*<div className="g-signin2" data-onsuccess={this.onSignIn()}></div>*/}
-        {/*<a href="#" onclick={this.signOut()}>Sign out</a>*/}
-        {this.renderCoinCards()}
+        <div className="col-md-9 content">
+        	{this.renderCoinCards()}
+        </div>
+        </div>
       </div>
 		)
 	}

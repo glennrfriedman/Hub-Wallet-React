@@ -9,31 +9,21 @@ class Coincard extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = { rowName: this.props.rowName, data: {}, dataReceived: false }
-		this.getData = this.getData.bind(this);
+		this.state = { rowName: this.props.rowName }
+	}
+
+	componentDidMount(){
+		if (this.props.data.percent_change_24h > 0){
+					this.setState({ delta: "delta-indicator delta-positive", statcard: "statcard statcard-success" }) ;
+				}
+		else if (this.props.data.percent_change_24h < 0){
+					this.setState({ delta: "delta-indicator delta-negative", statcard: "statcard statcard-danger" }) ;
+				}
 	}
 
 	// test for git
-
-	componentDidMount(){
-		this.getData();
-	}	
-
-	getData() {
-		let searchTerm = 'bit'
-		axios.get(`http://localhost:8080/api/search/${searchTerm}`)
-				.then(res => this.setState({data: res.data.searchResults, dataReceived: true}))
-		}
-
-	// getData() {
-	// 	axios.get(`https://api.coinmarketcap.com/v1/ticker/${this.props.coin}/?convert=USD`)
-	// 		.then(res => {
-	// 			console.log('data from req is', res.data)
-	// 			this.setState({ data: res.data[0] })
-	// 		})
-	// }
-
 	render(){
+		console.log('data from props in coincard is', this.props.data);
 		if (this.state.dataReceived === true) {
 			console.log('data in redner is', this.state.data )
 		}
@@ -51,20 +41,17 @@ class Coincard extends Component {
 			position: "absolute", 
 			zIndex: -1
 		}
-
 		return(
-		<div className="col-md-6 col-xl-3 mb-3 mb-md-4 mb-xl-0">
-    <div className="statcard statcard-danger"><iframe title="coinCard" className="chartjs-hidden-iframe" tabIndex="-1" style={statcardStyle}></iframe>
-      <div className="p-3">
-        <span className="statcard-desc">{this.props.coin}</span>
-        <h2 className="statcard-number">
-          {/*${commaNumber(this.state.data.price_usd)}*/}
-          <small className="delta-indicator delta-negative"></small>
+    	<div className={this.state.statcard}>
+      	<div className="p-3">
+        	<span className="statcard-desc">{this.props.data.name}</span>
+        	<h2 className="statcard-number">
+          	${commaNumber(this.props.data.price_usd)}
+        <small className={this.state.delta}>{commaNumber(this.props.data.percent_change_24h)}%</small>
         </h2>
-        <hr className="statcard-hr mb-0"></hr>
-      </div>
-    </div>
-  </div>
+        	<hr className="statcard-hr mb-0"></hr>
+      	</div>
+    	</div>
 		)
 	}
 
