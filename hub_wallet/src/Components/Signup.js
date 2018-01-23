@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button, Col, ControlLabel, FormGroup, Checkbox, FormControl, InputGroup, ButtonGroup } from 'react-bootstrap';
+import { FormGroup, FormControl, InputGroup, ButtonGroup } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import axios from 'axios';
 // import './toolkit-light.min.css';
@@ -68,8 +68,8 @@ class Signup extends Component {
           </InputGroup>
         </FormGroup>
         <ButtonGroup>
-          <Button type="submit">Sign Up</Button>
-          <Button onClick={this.props.toggleMode}>Back to Log In</Button>
+          <button type="submit" className="btn btn-lg btn-pill btn-success">Sign Up</button>
+          <button onClick={this.props.toggleMode} className="btn btn-lg btn-pill btn-primary">Log In</button>
         </ButtonGroup>
         </form>
     );

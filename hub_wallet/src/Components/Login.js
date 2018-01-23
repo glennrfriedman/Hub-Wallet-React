@@ -1,8 +1,7 @@
 import React, { Component } from 'react'; 
-import { Form, Button, Col, ControlLabel, FormGroup, Checkbox, FormControl, InputGroup, ButtonGroup } from 'react-bootstrap';
+import { FormGroup, FormControl, InputGroup, ButtonGroup } from 'react-bootstrap';
 import axios from 'axios';
 import FontAwesome from 'react-fontawesome';
-import Sidebar from './Sidebar';
 
 // login component
 // this will render when the user auth mode is set to login
@@ -54,8 +53,8 @@ class Login extends Component {
           </InputGroup>
         </FormGroup>
         <ButtonGroup>
-          <Button type="submit">Log In</Button>
-          <Button onClick={this.props.toggleMode}>Register</Button>
+          <button type="submit" className="btn btn-lg btn-pill btn-success">Log In</button>
+          <button onClick={this.props.toggleMode} className="btn btn-lg btn-pill btn-primary">Register</button>
         </ButtonGroup>
         </form>
     )

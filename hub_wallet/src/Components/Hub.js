@@ -51,7 +51,7 @@ class Hub extends Component {
 		}
 		return (
 			<div className="cointaner">
-        <Sidebar />
+        <Sidebar user={this.props.user} url={this.props.url}/>
         {/*<div className="g-signin2" data-onsuccess={this.onSignIn()}></div>*/}
         {/*<a href="#" onclick={this.signOut()}>Sign out</a>*/}
         {this.renderCoinCards()}

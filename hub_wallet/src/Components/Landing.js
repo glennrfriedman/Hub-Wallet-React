@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Jumbotron, Button } from 'react-bootstrap';
-// import './toolkit-light.min.css';
+import { Jumbotron } from 'react-bootstrap';
+import '../dist/toolkit-light.min.css';
 import Login from './Login';
 import Signup from './Signup';
 
@@ -23,7 +23,7 @@ render(){
 	return(
 		<div className="container">
 		<Jumbotron>
-    	<h1>Hub Wallet</h1>
+    	<h1>Hub Wallet<span className="icon icon-wallet sidebar-brand-icon"></span></h1>
     	<p>
       	Welcome to Hub Wallet! The Coin Market Cap companion application.
       	Sign Up or Log In below to start tracking your crypto investment the right way. 
