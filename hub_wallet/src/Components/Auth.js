@@ -1,14 +1,56 @@
 import React, { Component } from 'react';
-import Login from './Login';
-import Signup from './Signup';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import axios from 'axios';
+
+import Cookies from '../helpers/Cookies';
+import Landing from './Landing';
+import Hub from './Hub';
 
 class UserAuth extends Component {
-  constructor(){
+   constructor(){
     super();
-    // set up state
     this.state = {
-      mode: 'login' // keeps track of if the user is logging in or signing up
+      user: false,
+      url: 'http://localhost:8080'
     }
+    this.setUser = this.setUser.bind(this);
+    this.logout = this.logout.bind(this);
+    this.renderViews = this.renderViews.bind(this);
+  }
+
+  componentDidMount() {
+    this.initUser();
+  }
+
+  initUser(){
+    const token = Cookies.get('token');
+
+    if(token && token !== ''){
+      axios.get(`${this.state.url}/users/validate`, {
+        params: {auth_token: token}})
+        .then(res => {
+          this.setState({user: res.data, mode: 'hub', logout: 'no'});
+        })
+        .catch(err => {
+          Cookies.set('token', '')
+          this.setState({user: false, mode: 'auth'});
+        })
+    } else {
+      this.setState({mode: 'auth'});
+    }
+  }
+
+  setUser(user){
+    Cookies.set('token', user.token);
+    this.setState({ user: user }, () => {
+      this.props.history.push(`/hub`);
+    });
+    console.log(`this.state.user.email is ${this.state.user.email}`);
+  }
+
+  logout(){
+    Cookies.set('token', '');
+    this.setState({user: false});
   }
 
   toggleMode(e){ // toggle between the two modes
@@ -19,10 +61,23 @@ class UserAuth extends Component {
     })
   }
 
+  requireUser(render) {
+    return this.state.user ? render : <Redirect to="/404" />;
+  }
+
+  renderViews(){
+    return (
+      <Switch>
+        <Route exact path="/" render={props => (<Landing user={this.state.user} setUser={this.setUser} logout={this.logout} url={this.state.url}/>)}/>
+        <Route path="/hub" render={props => this.requireUser(<Hub user={this.state.user} url={this.state.url} logout={this.logout} />)}/>
+      </Switch>
+      )
+  }
+
   render(){
-    return this.state.mode === "login" ? 
-      ( <Login {...this.props} toggleMode={this.toggleMode.bind(this)} /> ) : 
-      ( <Signup {...this.props} toggleMode={this.toggleMode.bind(this)} /> )
+    return (
+      <div>{this.renderViews()}</div>
+      )
   }
 }
 export default UserAuth;

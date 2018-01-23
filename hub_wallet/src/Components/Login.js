@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'; 
+import { Form, Button, Col, ControlLabel, FormGroup, Checkbox, FormControl, InputGroup, ButtonGroup } from 'react-bootstrap';
 import axios from 'axios';
-
+import FontAwesome from 'react-fontawesome';
 import Sidebar from './Sidebar';
 
 // login component
@@ -39,35 +40,24 @@ class Login extends Component {
 
   render(){
     return(
-      <div>
-      <Sidebar />
-      <div className='loginBackground'>
-      </div>
-      <section>
-      <div className="auth-form">
-        <div className='loginHead'><h1>Hub Wallet</h1></div>
-        
-        <form className='loginForm' onSubmit={this.login.bind(this)}>
-          <label htmlFor='email'>Email:</label>
-          <input className='searchBar' value={this.state.inputs.email}
-            id='email' name='email' type='email'
-            onChange={e => this.changeInput(e, 'email')}
-          />
-
-          <label htmlFor='password'>Password:</label>
-          <input className='searchBar' value={this.state.inputs.password}
-            id='password' name='password' type='password'
-            onChange={e => this.changeInput(e, 'password')}
-          />
-
-          <div className="form-buttons">
-            <button type="submit" className="login-form-button">Log In</button>
-            <button onClick={this.props.toggleMode} className="login-form-button">Sign Up</button>
-          </div>
+        <form onSubmit={this.login.bind(this)}>
+        <FormGroup>
+          <InputGroup>
+            <InputGroup.Addon><FontAwesome name="fas fa-at"/></InputGroup.Addon>
+            <FormControl type="email" placeholder="Email" value={this.state.inputs.email} onChange={e => this.changeInput(e, "email")} />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup>
+          <InputGroup>
+            <InputGroup.Addon><FontAwesome name="fas fa-unlock-alt"/></InputGroup.Addon>
+            <FormControl type="password" placeholder="Password" value={this.state.inputs.password} onChange={e => this.changeInput(e, "password")} />
+          </InputGroup>
+        </FormGroup>
+        <ButtonGroup>
+          <Button type="submit">Log In</Button>
+          <Button onClick={this.props.toggleMode}>Register</Button>
+        </ButtonGroup>
         </form>
-      </div>
-      </section>
-      </div>
     )
   }
 }

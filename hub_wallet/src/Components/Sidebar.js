@@ -20,7 +20,6 @@ class Sidebar extends Component {
               <span className="icon icon-wallet sidebar-brand-icon"><span>Hub</span></span>
             </a>
           </div>
-
           <div className="collapse nav-toggleable-md" id="nav-toggleable-md">
             <form className="sidebar-form">
               <input className="form-control" type="text" placeholder="Search Coins..."></input>
