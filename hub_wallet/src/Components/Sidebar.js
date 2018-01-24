@@ -144,11 +144,16 @@ class Sidebar extends Component {
       return
     }
     else {
-      results.map(e => {
+        results.map(e => {
         let price = commaNumber(e.price_usd);
-        renderSearch.push(<p key={e.id}>{e.name} ({e.symbol}) - ${price}</p>)
-        return renderSearch
-      })
+        if (renderSearch.length < 5) {
+          renderSearch.push(<p key={e.id}>{e.name} ({e.symbol}) - ${price}</p>)
+          return renderSearch
+        }
+        else {
+          return renderSearch
+        }
+    })
     return renderSearch
     }
   }
