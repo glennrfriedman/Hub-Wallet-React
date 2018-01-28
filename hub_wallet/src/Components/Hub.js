@@ -59,8 +59,10 @@ class Hub extends Component {
 				<div className="cointaner">
 				 <div className="row">
 	        <Sidebar user={this.props.user} url={this.props.url}/>
-	        	<div className="col-md-7 content hr-divider mt-3 mb-5">
-	  					<h3 className="hr-divider-content hr-divider-heading">Current Holdings</h3>
+	        	<div className="col-md-7 content mt-3 mb-5">
+	        		<div className="hr-divider">
+	  						<h3 className="hr-divider-content hr-divider-heading">Current Holdings</h3>
+	  					</div>
 	  					<div>
 	  						{this.renderStatusBar()}
 	  					</div>
