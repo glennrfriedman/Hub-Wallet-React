@@ -16,7 +16,6 @@ class Hub extends Component {
 
 	componentDidMount(){
 		this.getData();
-		console.log('this.state.savedCoinData is ', this.state.savedCoinData)
 	}	
 
 	getData() {
@@ -30,7 +29,6 @@ class Hub extends Component {
 
 		renderCoinCards(){
 			const renderCoins = [];
-			let delta = '';
 			if (this.state.dataReceived === true) {
 				this.state.savedCoinData.savedCoinData.map(e => {
 					renderCoins.push(
@@ -51,14 +49,14 @@ class Hub extends Component {
 		}
 
 	render(){
-		if (this.state.dataReceived === true) {
-			console.log('saved coin data is ', this.state.savedCoinData.savedCoinData);
-			console.log('portfolio data is ', this.state.savedCoinData.portfolio);
-		}
+		// if (this.state.dataReceived === true) {
+		// 	console.log('saved coin data is ', this.state.savedCoinData.savedCoinData);
+		// 	console.log('portfolio data is ', this.state.savedCoinData.portfolio);
+		// }
 		return (
 				<div className="cointaner">
 				 <div className="row">
-	        <Sidebar user={this.props.user} url={this.props.url}/>
+	        	<Sidebar user={this.props.user} url={this.props.url}/>
 	        	<div className="col-md-7 content mt-3 mb-5">
 	        		<div className="hr-divider">
 	  						<h3 className="hr-divider-content hr-divider-heading">Current Holdings</h3>
@@ -68,10 +66,11 @@ class Hub extends Component {
 	  					</div>
 								<div className="hr-divider">
 								  <h3 className="hr-divider-content hr-divider-heading">
-								    MY COINS
 								  </h3>
 								</div>
-	  						{this.renderCoinCards()}
+							<div className="row">
+	  							{this.renderCoinCards()}
+	  					</div>
 						</div>
 	        </div>
 	      </div>

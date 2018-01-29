@@ -62,7 +62,7 @@ class UserAuth extends Component {
   }
 
   requireUser(render) {
-    return this.state.user ? render : <Redirect to="/404" />;
+    return this.state.user ? render : <Redirect to="/" />;
   }
 
   renderViews(){
