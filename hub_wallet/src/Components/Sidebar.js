@@ -108,7 +108,7 @@ class Sidebar extends Component {
               </button>
               <ul className="list-group">{this.state.searched && this.displaySearchResults()}</ul>
             </form>
-            <Addcoin coinData={this.getCoinInfo} modalClass={this.state.modalClass} aria={this.state.aria} style={this.state.style} closeModal={this.closeModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} />
+            <Addcoin url={this.props.url} user={this.props.user} coinData={this.getCoinInfo} modalClass={this.state.modalClass} aria={this.state.aria} style={this.state.style} closeModal={this.closeModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} />
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">{this.props.user.first_name} {this.props.user.last_name}'s Portfolio</li>
               <li className="nav-item">

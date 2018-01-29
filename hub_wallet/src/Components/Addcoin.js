@@ -1,21 +1,39 @@
 import React, { Component } from 'react';
-import { Modal, Button, Popover, Tooltip } from 'react-bootstrap';
+import { Form, FormGroup, Col, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 class Addcoin extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = { modalClass: this.props.modalClass, style: this.props.style, aria: this.props.aria };
-    // this.handleModal = this.handleModal.bind(this);
-    // this.handleClose = this.handleClose.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = { total_investment: 0, shares: 0, date_of_transaction: ''};
+    this.saveCoin = this.saveCoin.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  // handleClose() {
-  //   this.setState({ showModal: false }, () => {console.log(this.state.showModal)});
-  // }
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
 
-  // handleShow() {
-  //   this.setState({ showModal: true }, () => {console.log(this.state.showModal)});
-  // }
+  saveCoin(event) {
+    event.preventDefault();
+    console.log(this.props);
+    axios.post(`${this.props.url}/api/save`, {
+        user_id: this.props.user.id,
+        coin_name: this.props.coin,
+        coin_id: this.props.id,
+        investment: this.state.total_investment,
+        shares: this.state.shares,
+        date_of_transaction: this.state.date_of_transaction,
+        symbol: this.props.symbol
+      }).then(res => {
+        console.log(res);
+        this.props.closeModal();
+        <Redirect to="/hub" />
+      })
+  }
 
   render() {
       return (
@@ -23,14 +41,28 @@ class Addcoin extends Component {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h4 className="modal-title" id="myModalLabel">Add {this.props.coin} ({this.props.symbol}) Shares:</h4>
+                  <h4 className="modal-title" id="myModalLabel">Add {this.props.coin} ({this.props.symbol}) to Portfolio:</h4>
                   <button onClick={this.props.closeModal} type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden={this.props.aria}>×</span></button>
                 </div>
                 <div className="modal-body">
-                  <p>{this.props.id}</p>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-primary" data-dismiss="modal">Cool, got it!</button>
+                  <form onSubmit={this.saveCoin}>
+                    <div className="input-with-icon">
+                            <input name="total_investment" type="investment" placeholder="Total Investment" className="form-control" value={this.state.total_investment} onChange={this.onChange}/>
+                            <span className="icon icon-credit"></span>
+                    </div>
+                    <div className="input-with-icon">
+                            <input name="shares" type="shares" placeholder="Number of Shares" className="form-control" value={this.state.shares} onChange={this.onChange}/>
+                            <span className="icon icon-line-graph"></span>
+                    </div>
+                    <div className="input-with-icon">
+                            <input name='date_of_transaction' type="date_of_transaction" placeholder="Date (MM/DD/YYYY)" className="form-control" value={this.state.date_of_transaction} onChange={this.onChange}/>
+                            <span className="icon icon-calendar"></span>
+                    </div>
+                    <div className="modal-footer">
+                        <input className="btn btn-primary" type='submit' value='Save Coin' />
+                      <input className="submitButton" type='submit' value='Submit' />
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
