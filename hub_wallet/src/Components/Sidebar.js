@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Modal, OverlayTrigger, Button, Popover, Tooltip, ButtonToolbar } from 'react-bootstrap';
 import commaNumber from 'comma-number';
-// import Addcoin from './Addcoin';
+import Addcoin from './Addcoin';
 
 class Sidebar extends Component {
 
@@ -20,16 +20,25 @@ class Sidebar extends Component {
     this.searchCoins = this.searchCoins.bind(this);
     this.clickedCoin = this.clickedCoin.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.getCoinInfo = this.getCoinInfo.bind(this);
   }
 
-  clickedCoin(){
+  clickedCoin(event){
+    // event.preventDefault();
     console.log('searched coin clicked');
-    this.setState({style: "block", aria: "false", modalClass: 'modal fade show'})
+    console.log('event name is', event.target.name);
+    console.log('event id is', event.target.id);
+    console.log('event symbol is', event.target.value);
+    this.setState({style: "block", aria: "false", modalClass: 'modal fade show', coin: event.target.name, coinId: event.target.id, symbol: event.target.value})
   }
 
   closeModal(){
     console.log('modal closed');
     this.setState({style: "none", aria: "true", modalClass: 'modal fade'})
+  }
+
+  getCoinInfo(id, name, symbol){
+    console.log(id, name, symbol);
   }
 
   handleChange(event) {
@@ -63,7 +72,7 @@ class Sidebar extends Component {
         results.map(e => {
         let price = commaNumber(e.price_usd);
         if (renderSearch.length < 5) {
-          renderSearch.push(<Button onClick={this.clickedCoin} className="list-group-item" style={{textAlign: "center"}} key={e.id}>{e.name} ({e.symbol})</Button>)
+          renderSearch.push(<Button onClick={this.clickedCoin} name={e.name} id={e.id} value={e.symbol} className="list-group-item" style={{textAlign: "center"}} key={e.id}>{e.name} ({e.symbol})</Button>)
           return renderSearch
         }
         else {
@@ -99,32 +108,17 @@ class Sidebar extends Component {
               </button>
               <ul className="list-group">{this.state.searched && this.displaySearchResults()}</ul>
             </form>
-          <div id="docsModal" className={this.state.modalClass} tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" style={{display: this.state.style}} aria-hidden="true">
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h4 className="modal-title" id="myModalLabel">Example modal</h4>
-                  <button onClick={this.closeModal} type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden={this.state.aria}>×</span></button>
-                </div>
-                <div className="modal-body">
-                  <p>You're looking at an example modal in the dashboard theme.</p>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-primary" data-dismiss="modal">Cool, got it!</button>
-                </div>
-              </div>
-            </div>
-          </div>
+            <Addcoin coinData={this.getCoinInfo} modalClass={this.state.modalClass} aria={this.state.aria} style={this.state.style} closeModal={this.closeModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} />
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">{this.props.user.first_name} {this.props.user.last_name}'s Portfolio</li>
               <li className="nav-item">
-                <a className="nav-link active" href="index.html">Current Holdings</a>
+                <a className="nav-link active" >Current Holdings</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link " href="order-history/index.html">Profits & Losses</a>
+                <a className="nav-link">Profits & Losses</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link " href="fluid/index.html">Tax Calculation</a>
+                <a className="nav-link">Tax Calculation</a>
               </li>
             </ul>
             <hr className="visible-xs mt-3"></hr>
