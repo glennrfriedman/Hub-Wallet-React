@@ -28,7 +28,6 @@ class Coincard extends Component {
 		 axios.delete(`${this.props.url}/api/coins/${this.props.data.id}`)
       .then(res => {
         this.props.getData(this.props.user.id);
-        // this.props.reset();
       })
 	}
 
@@ -63,7 +62,7 @@ class Coincard extends Component {
 	}
 
 	clickCard(){
-		console.log('card is clicked');
+		// console.log('card is clicked');
 	}
 
 	// test for git

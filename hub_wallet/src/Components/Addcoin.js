@@ -29,7 +29,7 @@ class Addcoin extends Component {
         date_of_transaction: this.state.date_of_transaction,
         symbol: this.props.symbol
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         this.props.closeModal();
         this.props.getData(this.props.user.id);
         <Redirect to="/hub" />
@@ -39,35 +39,43 @@ class Addcoin extends Component {
   render() {
       return (
         <div id="docsModal" className={this.props.modalClass} tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" style={{display: this.props.style}} aria-hidden="true">
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content">
                 <div className="modal-header">
                   <h4 className="modal-title" id="myModalLabel">Add {this.props.coin} ({this.props.symbol}) to Portfolio:</h4>
                   <button onClick={this.props.closeModal} type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden={this.props.aria}>×</span></button>
                 </div>
-                <div className="modal-body">
-                  <form onSubmit={this.saveCoin}>
-                    <div className="input-with-icon">
+                <form className="modal-body" onSubmit={this.saveCoin}>
+                <div style={{display: "flex", flexDirection: "column"}}>
+                  <div className="form-group container-fluid">
+                    <label for="total_investment" className="col-form-label">Investment:</label><br></br>
+                        <div className="input-with-icon">
                             <input name="total_investment" type="investment" placeholder="Total Investment" className="form-control" value={this.state.total_investment} onChange={this.onChange}/>
                             <span className="icon icon-credit"></span>
-                    </div>
+                        </div>
+                  </div>
+                  <div className="form-group container-fluid">
+                    <label for="shares" className="col-form-label">Number of Shares:</label><br></br>
                     <div className="input-with-icon">
                             <input name="shares" type="shares" placeholder="Number of Shares" className="form-control" value={this.state.shares} onChange={this.onChange}/>
                             <span className="icon icon-line-graph"></span>
                     </div>
+                </div>
+                <div className="form-group container-fluid">
+                    <label for="date_of_transaction" className="col-form-label">Date of Transaction:</label><br></br>
                     <div className="input-with-icon">
                             <input name='date_of_transaction' type="date_of_transaction" placeholder="Date (MM/DD/YYYY)" className="form-control" value={this.state.date_of_transaction} onChange={this.onChange}/>
                             <span className="icon icon-calendar"></span>
                     </div>
+                </div>
+                </div>
                     <div className="modal-footer">
                         <input className="btn btn-primary" type='submit' value='Save Coin' />
-                      <input className="submitButton" type='submit' value='Submit' />
                     </div>
                   </form>
                 </div>
               </div>
             </div>
-          </div>
     );
   }
 }

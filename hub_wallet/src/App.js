@@ -10,11 +10,9 @@ import Auth from './Components/Auth';
 class App extends Component {
   render() {
     return (
-    	<div className="cointaner">
       <BrowserRouter>
         <Route path="/" render={props => <Auth {...props} />} />
       </BrowserRouter>
-      </div>
     );
   }
 }
