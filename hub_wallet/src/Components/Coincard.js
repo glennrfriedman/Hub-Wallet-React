@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import Chart from 'chart.js';
 // import { request } from 'graphql-request';
+import { Link } from 'react-router-dom';
 import commaNumber from 'comma-number';
 
 class Coincard extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = { rowName: this.props.rowName }
+		this.state = { rowName: this.props.rowName, data: this.props.data }
 		this.clickCard = this.clickCard.bind(this);
 		this.checkDeltaPort = this.checkDeltaPort.bind(this);
 		this.checkDeltaPrice = this.checkDeltaPrice.bind(this);
@@ -72,10 +73,11 @@ class Coincard extends Component {
 		// if (this.state.dataReceived === true) {
 		// 	console.log('data in redner is', this.state.data )
 		// }
+		let link = `/coin/${this.props.data.id}`
 		return(
 			<div className="col-sm-6">
 				<div className={this.state.statColor} onClick={this.clickCard}>
-				<span className="statcard-desc">{this.props.data.coin_name}</span>
+				<span className="statcard-desc" style={{fontSize: 20 + "px", fontWeight: "heavy"}}>{this.props.data.coin_name}</span>
 	 	 				<h3 className="statcard-number">Holding:
 	    				${commaNumber(this.props.data.net_present_value.toFixed(2))}
 	    			<small className={this.state.deltaPort}>{roi}%</small>
@@ -85,7 +87,7 @@ class Coincard extends Component {
 	    			<small className={this.state.deltaPrice}>{this.props.data.percent_change_24h}%</small>
 	  				</h3>
 	  		<div className="text-xs-right">
-							<span style={{margin: 2 + "%"}} className="icon icon-line-graph"></span>
+	  		 			<Link to={{ pathname: link, state: { data: this.props.data } }}><span style={{margin: 2 + "%"}} className="icon icon-line-graph"></span></Link>
 							<span style={{margin: 2 + "%"}} className="icon icon-info"></span>
 							<span onClick={this.onClickDelete} style={{margin: 2 + "%"}} className="icon icon-trash"></span>
 				</div>

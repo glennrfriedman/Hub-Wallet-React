@@ -89,13 +89,25 @@ class Hub extends Component {
 									    <h6 className="dashhead-subtitle">Portfolio</h6>
 									    <h2 className="dashhead-title">Overview</h2>
 									  </div>
-							  <div className="list-group dashhead-toolbar">
+							  <div className="dashhead-toolbar" style={{display: "flex", flexDirection: "row"}}>
 							  <div className="statcard p-3">
+							  		<span className="statcard-desc">Holdings</span>
   									<h3 className="statcard-number">
     											${commaNumber(this.state.savedCoinData.portfolio.total_npv.toFixed(2))}
     								<small className={this.state.deltaIndicator}>{commaNumber((this.state.savedCoinData.portfolio.total_roi_percent*100).toFixed(2))}%</small>
   									</h3>
-  							<span className="statcard-desc">Holdings</span>
+								</div>
+								<div className="statcard p-3">
+							  		<span className="statcard-desc">Investment</span>
+  									<h3 className="statcard-number">
+    											${commaNumber(this.state.savedCoinData.portfolio.total_investment.toFixed(2))}
+  									</h3>
+								</div>
+								<div className="statcard p-3">
+							  		<span className="statcard-desc">Gain/Loss</span>
+  									<h3 className="statcard-number">
+    											${commaNumber(this.state.savedCoinData.portfolio.total_roi_dollars.toFixed(2))}
+  									</h3>
 								</div>
 							  </div>
 							</div>}

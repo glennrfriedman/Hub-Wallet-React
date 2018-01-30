@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Modal, OverlayTrigger, Button, Popover, Tooltip, ButtonToolbar } from 'react-bootstrap';
 import commaNumber from 'comma-number';
+import { Link } from 'react-router-dom';
 import Addcoin from './Addcoin';
 
 class Sidebar extends Component {
@@ -124,13 +125,16 @@ class Sidebar extends Component {
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">{this.props.user.first_name} {this.props.user.last_name}'s Portfolio</li>
               <li className="nav-item">
-                <a className="nav-link active" >Current Holdings</a>
+                <a className="nav-link active">Current Holdings</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link">Profits & Losses</a>
+                <a className="nav-link">My Portfolio</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link">Tax Calculation</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link">All Coins</a>
               </li>
             </ul>
             <hr className="visible-xs mt-3"></hr>
