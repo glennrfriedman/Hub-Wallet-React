@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import Websocket from 'react-websocket';
-// import axios from 'axios';
+import axios from 'axios';
 // import Chart from 'chart.js';
 // import { request } from 'graphql-request';
 import commaNumber from 'comma-number';
@@ -14,12 +14,22 @@ class Coincard extends Component {
 		this.checkDeltaPort = this.checkDeltaPort.bind(this);
 		this.checkDeltaPrice = this.checkDeltaPrice.bind(this);
 		this.checkStatColor = this.checkStatColor.bind(this);
+		this.onClickDelete = this.onClickDelete.bind(this);
 	}
 
 	componentDidMount(){
 		this.checkDeltaPort();
 		this.checkDeltaPrice();
 		this.checkStatColor();
+	}
+
+	onClickDelete(){
+		console.log('delete clicked');
+		 axios.delete(`${this.props.url}/api/coins/${this.props.data.id}`)
+      .then(res => {
+        this.props.getData(this.props.user.id);
+        // this.props.reset();
+      })
 	}
 
 	checkDeltaPort(){
@@ -66,7 +76,7 @@ class Coincard extends Component {
 		return(
 			<div className="col-sm-6">
 				<div className={this.state.statColor} onClick={this.clickCard}>
-						<span className="statcard-desc">{this.props.data.coin_name}</span>
+				<span className="statcard-desc">{this.props.data.coin_name}</span>
 	 	 				<h3 className="statcard-number">Holding:
 	    				${commaNumber(this.props.data.net_present_value.toFixed(2))}
 	    			<small className={this.state.deltaPort}>{roi}%</small>
@@ -75,6 +85,11 @@ class Coincard extends Component {
 	    				${commaNumber(this.props.data.price_usd)}
 	    			<small className={this.state.deltaPrice}>{this.props.data.percent_change_24h}%</small>
 	  				</h3>
+	  		<div className="text-xs-right">
+							<span style={{margin: 2 + "%"}} className="icon icon-line-graph"></span>
+							<span style={{margin: 2 + "%"}} className="icon icon-info"></span>
+							<span onClick={this.onClickDelete} style={{margin: 2 + "%"}} className="icon icon-trash"></span>
+				</div>
 				</div>
 			</div>
 		)

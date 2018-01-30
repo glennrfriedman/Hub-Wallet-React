@@ -31,6 +31,7 @@ class Addcoin extends Component {
       }).then(res => {
         console.log(res);
         this.props.closeModal();
+        this.props.getData(this.props.user.id);
         <Redirect to="/hub" />
       })
   }
