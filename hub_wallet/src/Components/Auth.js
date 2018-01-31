@@ -6,6 +6,7 @@ import Cookies from '../helpers/Cookies';
 import Landing from './Landing';
 import Hub from './Hub';
 import Onecoin from './Onecoin';
+import Portfolio from './Portfolio';
 
 class UserAuth extends Component {
    constructor(){
@@ -71,7 +72,8 @@ class UserAuth extends Component {
       <Switch>
         <Route exact path="/" render={props => (<Landing user={this.state.user} setUser={this.setUser} logout={this.logout} url={this.state.url}/>)}/>
         <Route path="/hub" render={props => this.requireUser(<Hub user={this.state.user} url={this.state.url} logout={this.logout} />)}/>
-        <Route path="/coin/:coin_id" render={props => this.requireUser(<Onecoin user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>*/}
+        <Route path="/coin/:coin_id" render={props => this.requireUser(<Onecoin user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
+        <Route path="/portfolio" render={props => this.requireUser(<Portfolio user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
       </Switch>
       )
   }

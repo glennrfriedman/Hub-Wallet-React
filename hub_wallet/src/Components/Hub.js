@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import { request } from 'graphql-request';
 import axios from 'axios';
 import commaNumber from 'comma-number';
+import AdSense from 'react-adsense';
 import Sidebar from './Sidebar';
 import Coincard from './Coincard';
 import Statusbar from './Statusbar';
@@ -82,7 +83,7 @@ class Hub extends Component {
 		return (
 				<div style={{margin: 1 + '%'}} className="cointaner">
 				 <div className="row">
-	        	<Sidebar user={this.props.user} url={this.props.url} getData={this.getData} />
+	        	<Sidebar user={this.props.user} url={this.props.url} getData={this.getData} data={this.state.savedCoinData} />
 	        	<div className="col-md-7 content mt-3 mb-5">
 	        		{this.state.dataReceived && <div className="dashhead">
 									  <div className="dashhead-titles">

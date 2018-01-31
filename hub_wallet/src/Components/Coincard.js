@@ -88,8 +88,8 @@ class Coincard extends Component {
 	  				</h3>
 	  		<div className="text-xs-right">
 	  		 			<Link to={{ pathname: link, state: { data: this.props.data } }}><span style={{margin: 2 + "%"}} className="icon icon-line-graph"></span></Link>
-							<span style={{margin: 2 + "%"}} className="icon icon-info"></span>
-							<span onClick={this.onClickDelete} style={{margin: 2 + "%"}} className="icon icon-trash"></span>
+							<a><span style={{margin: 2 + "%"}} className="icon icon-info"></span></a>
+							<a><span onClick={this.onClickDelete} style={{margin: 2 + "%"}} className="icon icon-trash"></span></a>
 				</div>
 				</div>
 			</div>

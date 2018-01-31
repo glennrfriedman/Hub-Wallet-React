@@ -117,7 +117,7 @@ class Sidebar extends Component {
           <div className={this.state.toggleNav} id="nav">
             <form className="sidebar-form">
               <input className="form-control" type="text" ref={el=>{this.search=el}} placeholder="Search Coins..." onChange={this.handleChange} />
-              <button type="submit" className="btn-link">
+              <button onClick={this.handleChange} className="btn-link">
                 <span className="icon icon-magnifying-glass"></span>
               </button>
               <ul className="list-group">{this.state.searched && this.displaySearchResults()}</ul>
@@ -125,10 +125,10 @@ class Sidebar extends Component {
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">{this.props.user.first_name} {this.props.user.last_name}'s Portfolio</li>
               <li className="nav-item">
-                <a className="nav-link active">Current Holdings</a>
+                <Link className="nav-link active" to="/hub">Current Holdings</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link">My Portfolio</a>
+                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user } }}>My Portfolio</Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link">Tax Calculation</a>
