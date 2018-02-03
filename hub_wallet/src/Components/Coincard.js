@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-// import Websocket from 'react-websocket';
 import axios from 'axios';
-// import Chart from 'chart.js';
-// import { request } from 'graphql-request';
 import { Link } from 'react-router-dom';
 import commaNumber from 'comma-number';
 
@@ -88,8 +85,8 @@ class Coincard extends Component {
 	  				</h3>
 	  		<div className="text-xs-right">
 	  		 			<Link to={{ pathname: link, state: { data: this.props.data } }}><span style={{margin: 2 + "%"}} className="icon icon-line-graph"></span></Link>
-							<a><span style={{margin: 2 + "%"}} className="icon icon-info"></span></a>
-							<a><span onClick={this.onClickDelete} style={{margin: 2 + "%"}} className="icon icon-trash"></span></a>
+							<span style={{margin: 2 + "%"}} className="icon icon-info"></span>
+							<span onClick={this.onClickDelete} style={{margin: 2 + "%"}} className="icon icon-trash"></span>
 				</div>
 				</div>
 			</div>

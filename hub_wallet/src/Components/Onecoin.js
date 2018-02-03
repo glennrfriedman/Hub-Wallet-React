@@ -20,8 +20,7 @@ class Onecoin extends Component {
 		let net_present_value = (this.state.data.net_present_value).toFixed(2);
 		let price_usd = (this.state.data.price_usd * 1).toFixed(2);
 		return(
-			<div style={{margin: 1 + '%'}} className="container">
-			<div className="row">
+			<div style={{margin: 1 + '%'}} className="row">
 				<Sidebar user={this.props.user} url={this.props.url} />
 					<div className="col-md-7 content mt-3 mb-5">
 	        	<div className="dashhead">
@@ -55,7 +54,6 @@ class Onecoin extends Component {
 	  					</div>
 						</div>
 					</div>
-				</div>
 			)
 	}
 

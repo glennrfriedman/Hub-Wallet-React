@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Modal, OverlayTrigger, Button, Popover, Tooltip, ButtonToolbar } from 'react-bootstrap';
-import commaNumber from 'comma-number';
+import { Button } from 'react-bootstrap';
+// import commaNumber from 'comma-number';
 import { Link } from 'react-router-dom';
 import Addcoin from './Addcoin';
 
@@ -84,7 +84,7 @@ class Sidebar extends Component {
     }
     else {
         results.map(e => {
-        let price = commaNumber(e.price_usd);
+        // let price = commaNumber(e.price_usd);
         if (renderSearch.length < 5) {
           renderSearch.push(<Button onClick={this.clickedCoin} name={e.name} id={e.id} value={e.symbol} className="list-group-item" style={{textAlign: "center"}} key={e.id}>{e.name} ({e.symbol})</Button>)
           return renderSearch
@@ -99,9 +99,9 @@ class Sidebar extends Component {
 
   render(){
 
-    const logoStlye = {
-      alignSelf: "center"
-    }
+    // const logoStlye = {
+    //   alignSelf: "center"
+    // }
 
     return (
       <div className="col-md-3 sidebar">
@@ -110,9 +110,11 @@ class Sidebar extends Component {
             <button onClick={this.toggleNav} className={this.state.navButtonClass} type="button" data-toggle="collapse" data-target="#nav" aria-expanded={this.state.ariaNav}>
               <span className="sr-only">Toggle nav</span>
             </button>
-            <a style={logoStlye} className="sidebar-brand img-responsive">
-              <span className="icon icon-wallet sidebar-brand-icon"><span>Hub</span></span>
-            </a>
+            <div style={{fontSize: 40 + "px"}}className="sidebar-brand img-responsive">
+              <span className="icon icon-wallet">
+                <Link style={{color: "black"}} to="/hub">Hub</Link>
+              </span>
+            </div>
           </div>
           <div className={this.state.toggleNav} id="nav">
             <form className="sidebar-form">
@@ -128,7 +130,7 @@ class Sidebar extends Component {
                 <Link className="nav-link active" to="/hub">Current Holdings</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user } }}>My Portfolio</Link>
+                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user, delta: this.props.delta } }}>My Portfolio</Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link">Tax Calculation</a>

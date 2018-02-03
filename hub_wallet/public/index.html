@@ -12,7 +12,7 @@
     <!-- <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="dist/toolkit.min.css" rel="stylesheet">
+    <link type="css" href="dist/toolkit.min.css" rel="stylesheet">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -26,10 +26,15 @@
   </head>
   <body>
     <!-- bootstrap dependencies MAY NEED TO REMOVE -->
-    <script type="text/jsx" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/jsx" src="dist/toolkit.min.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script src="assets/js/jquery.min.js"/>
+    <script src="assets/js/popper.min.js"/>
+    <script src="assets/js/chart.js"/>
+    <script src="assets/js/tablesorter.min.js"/>
+    <script src="assets/js/toolkit.js"/>
+    <script src="assets/js/application.js"/>
+    <script type="text/jsx" src="dist/toolkit.min.js"/>
+    <script src="https://apis.google.com/js/platform.js" async defer/>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"/>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({
         google_ad_client: "ca-pub-2554259711726878",

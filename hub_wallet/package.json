@@ -16,7 +16,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
     "recharts": "^1.0.0-beta.9",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "semantic-ui-react": "^0.77.2"
   },
   "scripts": {
     "start": "react-scripts start",

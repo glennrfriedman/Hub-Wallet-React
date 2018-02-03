@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import { request } from 'graphql-request';
 import axios from 'axios';
 import commaNumber from 'comma-number';
-import AdSense from 'react-adsense';
+// import AdSense from 'react-adsense';
 import Sidebar from './Sidebar';
 import Coincard from './Coincard';
 import Statusbar from './Statusbar';
@@ -83,7 +83,7 @@ class Hub extends Component {
 		return (
 				<div style={{margin: 1 + '%'}} className="cointaner">
 				 <div className="row">
-	        	<Sidebar user={this.props.user} url={this.props.url} getData={this.getData} data={this.state.savedCoinData} />
+	        	<Sidebar user={this.props.user} url={this.props.url} getData={this.getData} data={this.state.savedCoinData} delta={this.state.deltaIndicator} />
 	        	<div className="col-md-7 content mt-3 mb-5">
 	        		{this.state.dataReceived && <div className="dashhead">
 									  <div className="dashhead-titles">
@@ -115,13 +115,6 @@ class Hub extends Component {
 	        		<div className="hr-divider">
 	  						<h3 className="hr-divider-content hr-divider-heading">Current Holdings</h3>
 	  					</div>
-	  					<div>
-	  						{this.renderStatusBar()}
-	  					</div>
-								<div className="hr-divider">
-								  <h3 className="hr-divider-content hr-divider-heading">
-								  </h3>
-								</div>
 							<div className="row">
 	  							{this.renderCoinCards()}
 	  					</div>

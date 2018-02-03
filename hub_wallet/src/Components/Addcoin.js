@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Col, ControlLabel, FormControl, Button } from 'react-bootstrap';
+// import { Form, FormGroup, Col, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
@@ -48,21 +48,21 @@ class Addcoin extends Component {
                 <form className="modal-body" onSubmit={this.saveCoin}>
                 <div style={{display: "flex", flexDirection: "column"}}>
                   <div className="form-group container-fluid">
-                    <label for="total_investment" className="col-form-label">Investment:</label><br></br>
+                    <label className="col-form-label">Investment:</label><br></br>
                         <div className="input-with-icon">
                             <input name="total_investment" type="investment" placeholder="Total Investment" className="form-control" value={this.state.total_investment} onChange={this.onChange}/>
                             <span className="icon icon-credit"></span>
                         </div>
                   </div>
                   <div className="form-group container-fluid">
-                    <label for="shares" className="col-form-label">Number of Shares:</label><br></br>
+                    <label className="col-form-label">Number of Shares:</label><br></br>
                     <div className="input-with-icon">
                             <input name="shares" type="shares" placeholder="Number of Shares" className="form-control" value={this.state.shares} onChange={this.onChange}/>
                             <span className="icon icon-line-graph"></span>
                     </div>
                 </div>
                 <div className="form-group container-fluid">
-                    <label for="date_of_transaction" className="col-form-label">Date of Transaction:</label><br></br>
+                    <label className="col-form-label">Date of Transaction:</label><br></br>
                     <div className="input-with-icon">
                             <input name='date_of_transaction' type="date_of_transaction" placeholder="Date (MM/DD/YYYY)" className="form-control" value={this.state.date_of_transaction} onChange={this.onChange}/>
                             <span className="icon icon-calendar"></span>
