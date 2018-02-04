@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, Cell} from 'recharts';
-import { Pie, Bar } from 'react-chartjs-2';
+import { Pie, Bar, Doughnut } from 'react-chartjs-2';
 import commaNumber from 'comma-number';
 import Sidebar from './Sidebar';
 
@@ -15,16 +14,30 @@ class Portfolio extends Component {
 									 delta: this.props.routeProps.location.state.delta, 
 									 mode: 'return' 
 									}
-		// this.createChartObj = this.createChartObj.bind(this);
 		this.createPieData = this.createPieData.bind(this);
 		this.createBarData = this.createBarData.bind(this);
+		this.createDoughnutData = this.createDoughnutData.bind(this);
 		this.toggleGraph = this.toggleGraph.bind(this);
-		// this.onChange = this.onChange.bind(this);
 	}
 
 	componentDidMount(){
 		this.createPieData();
 		this.createBarData();
+		this.createDoughnutData();
+	}
+
+	createDoughnutData(){
+		let { total_investment, total_roi_dollars, total_npv } = this.state.data.portfolio
+		let doughnutData = {
+					labels: ['Investment', 'Return'], 
+					datasets: [ { 
+						label: 'Coin', 
+						data: [total_investment, total_roi_dollars],
+						backgroundColor:[
+              'rgba(255, 99, 132, 0.6)',
+              'rgba(54, 162, 235, 0.6)',]  
+					} ] };
+		this.setState({doughnutData: doughnutData})
 	}
 
 	createBarData(){
@@ -43,18 +56,15 @@ class Portfolio extends Component {
       //         'rgba(255, 159, 64, 0.6)',
       //         'rgba(255, 99, 132, 0.6)']  
 					},
+					{
+						label: 'Current Holdings', 
+						data: [],
+						backgroundColor: 'rgba(255, 159, 64, 0.6)'
+					},
 					{ 
 						label: 'Return', 
 						data: [],
 						backgroundColor: "#71B37C"
-						// backgroundColor:[
-      //         'rgba(255, 99, 132, 0.6)',
-      //         'rgba(54, 162, 235, 0.6)',
-      //         'rgba(255, 206, 86, 0.6)',
-      //         'rgba(75, 192, 192, 0.6)',
-      //         'rgba(153, 102, 255, 0.6)',
-      //         'rgba(255, 159, 64, 0.6)',
-      //         'rgba(255, 99, 132, 0.6)']  
 					} ] };
 		this.state.data.savedCoinData.forEach(function(coin){
 				let investment = coin.investment.toFixed(2)
@@ -62,13 +72,15 @@ class Portfolio extends Component {
 				let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
 				barChartData.labels.push(coin.coin_name);
 				barChartData.datasets[0].data.push(investment);
-				barChartData.datasets[1].data.push(return_on_investment_dollars);
+				barChartData.datasets[2].data.push(return_on_investment_dollars);
+				barChartData.datasets[1].data.push(net_present_value);
 			return barChartData;
 		})
 		this.setState({barChartData: barChartData});
 	}
 
 	createPieData(){
+		let { total_investment } = this.state.data.portfolio
 		let pieChartData = {
 					labels: [], 
 					datasets: [ { 
@@ -84,11 +96,11 @@ class Portfolio extends Component {
               'rgba(255, 99, 132, 0.6)']  
 					} ] };
 		this.state.data.savedCoinData.forEach(function(coin){
-				let investment = coin.investment
+				let percentTotalPortfolio = ((coin.investment/total_investment)*100).toFixed(2)
 				let net_present_value = coin.net_present_value.toFixed(2)
 				let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
 				pieChartData.labels.push(coin.coin_name);
-				pieChartData.datasets[0].data.push(investment);
+				pieChartData.datasets[0].data.push(percentTotalPortfolio);
 			return pieChartData;
 		})
 		this.setState({pieChartData: pieChartData});
@@ -141,15 +153,24 @@ class Portfolio extends Component {
 												     	<a onClick={this.toggleGraph} className="nav-link active" name='return' role="tab" data-toggle="tab">Return</a>}
 												     	{this.state.mode === 'diversity' && 
 												     	<a onClick={this.toggleGraph} className="nav-link" name='return' role="tab" data-toggle="tab">Return</a>}
+												     	{this.state.mode === 'health' && 
+												     	<a onClick={this.toggleGraph} className="nav-link" name='return' role="tab" data-toggle="tab">Return</a>}
 												  </li>
 												  <li className="nav-item" role="presentation">
 												  	{this.state.mode === 'return' && 
 												     <a onClick={this.toggleGraph} className="nav-link" name='diversity' role="tab" data-toggle="tab">Diversity</a>}
 												     {this.state.mode === 'diversity' && 
 												     <a onClick={this.toggleGraph} className="nav-link active" name='diversity' role="tab" data-toggle="tab">Diversity</a>}
+												     {this.state.mode === 'health' && 
+												     <a onClick={this.toggleGraph} className="nav-link" name='diversity' role="tab" data-toggle="tab">Diversity</a>}
 												  </li>
 												  <li className="nav-item" role="presentation">
-												      <a className="nav-link" role="tab" data-toggle="tab" aria-controls="profit">Health</a>
+												  	{this.state.mode === 'return' && 
+												     <a onClick={this.toggleGraph} className="nav-link"  name='health' role="tab" data-toggle="tab" aria-controls="profit">Health</a>}
+												     {this.state.mode === 'diversity' && 
+												     <a onClick={this.toggleGraph} className="nav-link"  name='health' role="tab" data-toggle="tab" aria-controls="profit">Health</a>}
+												     {this.state.mode === 'health' && 
+												     <a onClick={this.toggleGraph} className="nav-link active"  name='health' role="tab" data-toggle="tab" aria-controls="profit">Health</a>}
 												   </li>
 													</ul>
 											</div>
@@ -188,6 +209,25 @@ class Portfolio extends Component {
 										      <div className="row"> 
 										      <Pie
 											          data={this.state.pieChartData}
+											          options={{
+											            title:{
+											              display:true,
+											              text:'Portfolio Diversity by Invested Dollars',
+											              fontSize:25
+											            },
+											            legend:{
+											              display:true,
+											              position:"bottom"
+											            },
+											            responsive: true
+											          }}
+											        />
+										     	</div>
+										      }
+										      {this.state.mode === 'health' &&
+										      <div className="row"> 
+										      <Doughnut
+											          data={this.state.doughnutData}
 											          options={{
 											            title:{
 											              display:true,

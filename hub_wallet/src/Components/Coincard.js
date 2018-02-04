@@ -84,7 +84,7 @@ class Coincard extends Component {
 	    			<small className={this.state.deltaPrice}>{this.props.data.percent_change_24h}%</small>
 	  				</h3>
 	  		<div className="text-xs-right">
-	  		 			<Link to={{ pathname: link, state: { data: this.props.data } }}><span style={{margin: 2 + "%"}} className="icon icon-line-graph"></span></Link>
+	  		 			<Link to={{ pathname: link, state: { data: this.props.data, allCoinData: this.props.allCoinData } }}><span style={{margin: 2 + "%"}} className="icon icon-line-graph"></span></Link>
 							<span style={{margin: 2 + "%"}} className="icon icon-info"></span>
 							<span onClick={this.onClickDelete} style={{margin: 2 + "%"}} className="icon icon-trash"></span>
 				</div>

@@ -8,7 +8,7 @@ class Onecoin extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = { data: this.props.routeProps.location.state.data  }
+		this.state = { data: this.props.routeProps.location.state.data, allCoinData: this.props.routeProps.location.state.allCoinData }
 	}
 
 	componentDidMount(){
@@ -21,7 +21,7 @@ class Onecoin extends Component {
 		let price_usd = (this.state.data.price_usd * 1).toFixed(2);
 		return(
 			<div style={{margin: 1 + '%'}} className="row">
-				<Sidebar user={this.props.user} url={this.props.url} />
+				<Sidebar data={this.state.allCoinData} user={this.props.user} url={this.props.url} />
 					<div className="col-md-7 content mt-3 mb-5">
 	        	<div className="dashhead">
 									  <div className="dashhead-titles">

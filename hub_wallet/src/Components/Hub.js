@@ -42,7 +42,7 @@ class Hub extends Component {
 			if (this.state.dataReceived === true) {
 				this.state.savedCoinData.savedCoinData.map(e => {
 					renderCoins.push(
-						<Coincard user={this.props.user} url={this.props.url} key={e.id} coin={e.coinId} data={e} getData={this.getData}/>
+						<Coincard allCoinData={this.state.savedCoinData} user={this.props.user} url={this.props.url} key={e.id} coin={e.coinId} data={e} getData={this.getData}/>
 					)
 					return renderCoins
 				})
