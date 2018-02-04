@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, Cell} from 'recharts';
-import { Pie } from 'react-chartjs-2';
+// import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, Cell} from 'recharts';
+import { Pie, Bar } from 'react-chartjs-2';
 import commaNumber from 'comma-number';
 import Sidebar from './Sidebar';
 
@@ -8,54 +8,68 @@ class Portfolio extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = { data: this.props.routeProps.location.state.data, chartData: [], user:  this.props.routeProps.location.state.user, delta: this.props.routeProps.location.state.delta, renderBar: true }
-		this.createChartObj = this.createChartObj.bind(this);
-		this.createPieObj = this.createPieObj.bind(this);
-		this.createPieObj2 = this.createPieObj2.bind(this);
+		this.state = { 
+									 data: this.props.routeProps.location.state.data, 
+									 chartData: [], 
+									 user:  this.props.routeProps.location.state.user, 
+									 delta: this.props.routeProps.location.state.delta, 
+									 mode: 'return' 
+									}
+		// this.createChartObj = this.createChartObj.bind(this);
+		this.createPieData = this.createPieData.bind(this);
+		this.createBarData = this.createBarData.bind(this);
 		this.toggleGraph = this.toggleGraph.bind(this);
 		// this.onChange = this.onChange.bind(this);
 	}
 
 	componentDidMount(){
-		// this.createChartObj();
-		// this.createPieObj();
+		this.createPieData();
+		this.createBarData();
 	}
 
-	createChartObj(){
-		let chartData = [];
-		// console.log('data in portfolio createChartObj is', this.state.data)
+	createBarData(){
+		let barChartData = {
+					labels: [], 
+					datasets: [ { 
+						label: 'Investment', 
+						backgroundColor: "#5C99B3",
+						data: []
+						// backgroundColor:[
+      //         'rgba(255, 99, 132, 0.6)',
+      //         'rgba(54, 162, 235, 0.6)',
+      //         'rgba(255, 206, 86, 0.6)',
+      //         'rgba(75, 192, 192, 0.6)',
+      //         'rgba(153, 102, 255, 0.6)',
+      //         'rgba(255, 159, 64, 0.6)',
+      //         'rgba(255, 99, 132, 0.6)']  
+					},
+					{ 
+						label: 'Return', 
+						data: [],
+						backgroundColor: "#71B37C"
+						// backgroundColor:[
+      //         'rgba(255, 99, 132, 0.6)',
+      //         'rgba(54, 162, 235, 0.6)',
+      //         'rgba(255, 206, 86, 0.6)',
+      //         'rgba(75, 192, 192, 0.6)',
+      //         'rgba(153, 102, 255, 0.6)',
+      //         'rgba(255, 159, 64, 0.6)',
+      //         'rgba(255, 99, 132, 0.6)']  
+					} ] };
 		this.state.data.savedCoinData.forEach(function(coin){
-			let investment = coin.investment.toFixed(2);
-			let net_present_value = coin.net_present_value.toFixed(2)
-			let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
-			chartData.push({
-				Coin: coin.coin_name,
-				Investment: investment,
-				PV: net_present_value,
-				Return: return_on_investment_dollars
-			})
-			return chartData;
+				let investment = coin.investment.toFixed(2)
+				let net_present_value = coin.net_present_value.toFixed(2)
+				let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
+				barChartData.labels.push(coin.coin_name);
+				barChartData.datasets[0].data.push(investment);
+				barChartData.datasets[1].data.push(return_on_investment_dollars);
+			return barChartData;
 		})
-		return chartData;
+		this.setState({barChartData: barChartData});
 	}
 
-	createPieObj(){
-		let pieChartData = [];
-		this.state.data.savedCoinData.forEach(function(coin){
-			let investment = coin.investment
-			let net_present_value = coin.net_present_value.toFixed(2)
-			let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
-			pieChartData.push({
-				name: coin.coin_name,
-				Investment: investment
-			})
-			return pieChartData;
-		})
-		return pieChartData;
-	}
-
-	createPieObj2(){
-		let returnChartData = {
+	createPieData(){
+		let pieChartData = {
 					labels: [], 
 					datasets: [ { 
 						label: 'Coin', 
@@ -70,47 +84,24 @@ class Portfolio extends Component {
               'rgba(255, 99, 132, 0.6)']  
 					} ] };
 		this.state.data.savedCoinData.forEach(function(coin){
-			let investment = coin.investment
-			let net_present_value = coin.net_present_value.toFixed(2)
-			let return_on_investment_dollars = coin.return_on_investment_dollars
-			returnChartData.labels.push(coin.coin_name);
-			returnChartData.datasets[0].data.push(investment);
-			return returnChartData;
+				let investment = coin.investment
+				let net_present_value = coin.net_present_value.toFixed(2)
+				let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
+				pieChartData.labels.push(coin.coin_name);
+				pieChartData.datasets[0].data.push(investment);
+			return pieChartData;
 		})
-		return returnChartData;
+		this.setState({pieChartData: pieChartData});
 	}
 
 	toggleGraph(event){
 		// console.log('event.target is', event.target);
-		if (event.target.classList.contains('active')){
-			event.className = ('nav-link');
-		}
-		else {
-			event.className = ('nav-link active');
-		}
-		if (this.state.renderBar === true){
-			this.setState({renderBar: false, renderDiv: true})
-		}
-		else if (this.state.renderBar === false){
-			this.setState({renderBar: true, renderDiv: false})
-		}
+		this.setState({mode: event.target.name})
 	}
 
 	render(){
-	// 	const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-	// 	const RADIAN = Math.PI / 180;                    
-	// 	const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
- // 				const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
- //  			const x  = cx + radius * Math.cos(-midAngle * RADIAN);
- //  			const y = cy  + radius * Math.sin(-midAngle * RADIAN);
-	// 	  return (
-	// 	    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
-	// 	    	{`${(percent * 100).toFixed(0)}%`}
-	// 	    </text>
-	// 	  );
-	// };
-		console.log(this.state.user)
-		console.log('chartData in render is ', this.state.chartData)
+		// console.log(this.state.user)
+		// console.log('chartData in render is ', this.state.chartData)
 		// console.log('data in portfolio is', this.state.data);
 		let style = {
 			  boxSizing: "border-box",
@@ -119,17 +110,11 @@ class Portfolio extends Component {
   			height: 800 + "px",
   			backgroundColor: "#fff"
 		}
-
-		const investmentData = this.createPieObj();
-
-		console.log('investmentData is', investmentData);
-
-		const returnData = this.createPieObj2();
-
-		console.log('returnData is', returnData);
-
-		let data = this.createChartObj();
-		// let pieData = this.createPieObj();
+		// const investmentData = this.createPieObj();
+		// console.log('investmentData is', investmentData);
+		// const returnData = this.createPieObj2();
+		// console.log('returnData is', returnData);
+		// let data = this.createChartObj();
 		return(
 				<div style={{margin: 1 + '%'}} className="row">
 					<Sidebar user={this.props.user} url={this.props.url} />
@@ -152,20 +137,26 @@ class Portfolio extends Component {
 			  					<div className="hr-divider">
 												<ul className="nav nav-pills hr-divider-content hr-divider-nav" role="tablist">
 												  <li className="nav-item" role="presentation">
-												     <a onClick={this.toggleGraph} className="nav-link active" role="tab" data-toggle="tab" aria-controls="sales">Return</a>
+												  		{this.state.mode === 'return' && 
+												     	<a onClick={this.toggleGraph} className="nav-link active" name='return' role="tab" data-toggle="tab">Return</a>}
+												     	{this.state.mode === 'diversity' && 
+												     	<a onClick={this.toggleGraph} className="nav-link" name='return' role="tab" data-toggle="tab">Return</a>}
 												  </li>
 												  <li className="nav-item" role="presentation">
-												     <a onClick={this.toggleGraph} className="nav-link" role="tab" data-toggle="tab" aria-controls="inventory">Diversity</a>
+												  	{this.state.mode === 'return' && 
+												     <a onClick={this.toggleGraph} className="nav-link" name='diversity' role="tab" data-toggle="tab">Diversity</a>}
+												     {this.state.mode === 'diversity' && 
+												     <a onClick={this.toggleGraph} className="nav-link active" name='diversity' role="tab" data-toggle="tab">Diversity</a>}
 												  </li>
 												  <li className="nav-item" role="presentation">
 												      <a className="nav-link" role="tab" data-toggle="tab" aria-controls="profit">Health</a>
 												   </li>
 													</ul>
 											</div>
-													{this.state.renderBar &&
+													{this.state.mode === 'return' &&
 													<div className="row"> 
-													<div style={style}>
-													<BarChart width={750} height={550} data={data} stackOffset="sign"
+													{/*<div style={style}>
+													<BarChart label width={750} height={550} data={data} stackOffset="sign"
 										            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 										       <XAxis dataKey="Coin"/>
 										       <YAxis/>
@@ -176,22 +167,38 @@ class Portfolio extends Component {
 										       <Bar dataKey="Investment" fill="#1485CC" stackId="stack" />
 										       <Bar dataKey="Return" fill="#FFC551" stackId="stack" />
 										      </BarChart>
-										     	</div>
-										      </div>}
-										      {this.state.renderDiv &&
-										      <div className="row"> 
-										      <Pie
-											          data={returnData}
+										     	</div>*/}
+										     	<Bar
+											          data={this.state.barChartData}
 											          options={{
 											            title:{
 											              display:true,
-											              text:'Portfolio Diversity (Investment)',
+											              text:'Return and Investment Dollars by Coin',
 											              fontSize:25
 											            },
 											            legend:{
 											              display:true,
 											              position:"bottom"
-											            }
+											            },
+											            responsive: true
+											          }}
+											        />
+										      </div>}
+										      {this.state.mode === 'diversity' &&
+										      <div className="row"> 
+										      <Pie
+											          data={this.state.pieChartData}
+											          options={{
+											            title:{
+											              display:true,
+											              text:'Portfolio Diversity by Invested Dollars',
+											              fontSize:25
+											            },
+											            legend:{
+											              display:true,
+											              position:"bottom"
+											            },
+											            responsive: true
 											          }}
 											        />
 										     	</div>

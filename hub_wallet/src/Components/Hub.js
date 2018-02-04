@@ -77,9 +77,9 @@ class Hub extends Component {
 		// 	console.log('portfolio data is ', this.state.savedCoinData.portfolio);
 		// }
 		// let sign = 'delta-indicator delta-positive'
-		if (this.state.dataReceived === true){
-			let total_roi_percent = (this.state.savedCoinData.portfolio.total_roi_percent*100).toFixed(2);
-		}
+		// if (this.state.dataReceived === true){
+		// 	let total_roi_percent = (this.state.savedCoinData.portfolio.total_roi_percent*100).toFixed(2);
+		// }
 		return (
 				<div style={{margin: 1 + '%'}} className="cointaner">
 				 <div className="row">
