@@ -140,6 +140,11 @@ class Sidebar extends Component {
               </li>
             </ul>
             <hr className="visible-xs mt-3"></hr>
+            <ul className="nav nav-pills nav-stacked flex-column">
+               <li className="nav-item">
+                <a onClick={this.props.logout} className="nav-link">Logout</a>
+              </li>
+            </ul>
           </div>
         </nav>
         <Addcoin getData={this.props.getData} url={this.props.url} user={this.props.user} coinData={this.getCoinInfo} modalClass={this.state.modalClass} aria={this.state.aria} style={this.state.style} closeModal={this.closeModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} />

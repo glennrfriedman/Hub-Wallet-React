@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, PieChart, Pie, Cell} from 'recharts';
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, Cell} from 'recharts';
+import { Pie } from 'react-chartjs-2';
 import commaNumber from 'comma-number';
 import Sidebar from './Sidebar';
 
@@ -45,7 +46,7 @@ class Portfolio extends Component {
 			let net_present_value = coin.net_present_value.toFixed(2)
 			let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
 			pieChartData.push({
-				Coin: coin.coin_name,
+				name: coin.coin_name,
 				Investment: investment
 			})
 			return pieChartData;
@@ -54,21 +55,39 @@ class Portfolio extends Component {
 	}
 
 	createPieObj2(){
-		let returnChartData = [];
+		let returnChartData = {
+					labels: [], 
+					datasets: [ { 
+						label: 'Coin', 
+						data: [],
+						backgroundColor:[
+              'rgba(255, 99, 132, 0.6)',
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 206, 86, 0.6)',
+              'rgba(75, 192, 192, 0.6)',
+              'rgba(153, 102, 255, 0.6)',
+              'rgba(255, 159, 64, 0.6)',
+              'rgba(255, 99, 132, 0.6)']  
+					} ] };
 		this.state.data.savedCoinData.forEach(function(coin){
 			let investment = coin.investment
 			let net_present_value = coin.net_present_value.toFixed(2)
 			let return_on_investment_dollars = coin.return_on_investment_dollars
-			returnChartData.push({
-				Coin: coin.coin_name,
-				Return: return_on_investment_dollars
-			})
+			returnChartData.labels.push(coin.coin_name);
+			returnChartData.datasets[0].data.push(investment);
 			return returnChartData;
 		})
 		return returnChartData;
 	}
 
-	toggleGraph(){
+	toggleGraph(event){
+		// console.log('event.target is', event.target);
+		if (event.target.classList.contains('active')){
+			event.className = ('nav-link');
+		}
+		else {
+			event.className = ('nav-link active');
+		}
 		if (this.state.renderBar === true){
 			this.setState({renderBar: false, renderDiv: true})
 		}
@@ -78,18 +97,18 @@ class Portfolio extends Component {
 	}
 
 	render(){
-		const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-		const RADIAN = Math.PI / 180;                    
-		const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
- 				const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  			const x  = cx + radius * Math.cos(-midAngle * RADIAN);
-  			const y = cy  + radius * Math.sin(-midAngle * RADIAN);
-		  return (
-		    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
-		    	{`${(percent * 100).toFixed(0)}%`}
-		    </text>
-		  );
-	};
+	// 	const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+	// 	const RADIAN = Math.PI / 180;                    
+	// 	const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+ // 				const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+ //  			const x  = cx + radius * Math.cos(-midAngle * RADIAN);
+ //  			const y = cy  + radius * Math.sin(-midAngle * RADIAN);
+	// 	  return (
+	// 	    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
+	// 	    	{`${(percent * 100).toFixed(0)}%`}
+	// 	    </text>
+	// 	  );
+	// };
 		console.log(this.state.user)
 		console.log('chartData in render is ', this.state.chartData)
 		// console.log('data in portfolio is', this.state.data);
@@ -133,7 +152,7 @@ class Portfolio extends Component {
 			  					<div className="hr-divider">
 												<ul className="nav nav-pills hr-divider-content hr-divider-nav" role="tablist">
 												  <li className="nav-item" role="presentation">
-												     <a onClick={this.toggleGraph} className="nav-link" role="tab" data-toggle="tab" aria-controls="sales">Return</a>
+												     <a onClick={this.toggleGraph} className="nav-link active" role="tab" data-toggle="tab" aria-controls="sales">Return</a>
 												  </li>
 												  <li className="nav-item" role="presentation">
 												     <a onClick={this.toggleGraph} className="nav-link" role="tab" data-toggle="tab" aria-controls="inventory">Diversity</a>
@@ -161,16 +180,21 @@ class Portfolio extends Component {
 										      </div>}
 										      {this.state.renderDiv &&
 										      <div className="row"> 
-													<div style={style}>
-														<PieChart width={800} height={400}>
-											        <Pie dataKey="Investment" data={investmentData} cx={200} cy={200} outerRadius={80} fill="#8884d8" labelLine={false} label={renderCustomizedLabel}>
-											        	{
-											          	data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
-											          }
-											         </Pie>
-											       </PieChart>
+										      <Pie
+											          data={returnData}
+											          options={{
+											            title:{
+											              display:true,
+											              text:'Portfolio Diversity (Investment)',
+											              fontSize:25
+											            },
+											            legend:{
+											              display:true,
+											              position:"bottom"
+											            }
+											          }}
+											        />
 										     	</div>
-										      </div>
 										      }
 								    </div>
 								 </div>

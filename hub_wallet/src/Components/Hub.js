@@ -83,7 +83,7 @@ class Hub extends Component {
 		return (
 				<div style={{margin: 1 + '%'}} className="cointaner">
 				 <div className="row">
-	        	<Sidebar user={this.props.user} url={this.props.url} getData={this.getData} data={this.state.savedCoinData} delta={this.state.deltaIndicator} />
+	        	<Sidebar user={this.props.user} url={this.props.url} getData={this.getData} data={this.state.savedCoinData} delta={this.state.deltaIndicator} logout={this.props.logout}/>
 	        	<div className="col-md-7 content mt-3 mb-5">
 	        		{this.state.dataReceived && <div className="dashhead">
 									  <div className="dashhead-titles">
