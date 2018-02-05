@@ -1,27 +1,60 @@
 import React, { Component } from "react";
 import commaNumber from 'comma-number';
-
+import { Bar } from 'react-chartjs-2';
 import Sidebar from './Sidebar';
-
 
 class Onecoin extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = { data: this.props.routeProps.location.state.data, allCoinData: this.props.routeProps.location.state.allCoinData }
+		this.state = { data: this.props.routeProps.location.state.data, allCoinData: this.props.routeProps.location.state.allCoinData, deltaPort: this.props.routeProps.location.state.deltaPort }
+		this.createBarData = this.createBarData.bind(this);
 	}
 
 	componentDidMount(){
 		console.log('data in Onecoin is', this.state.data )
+		this.createBarData();
+	}
+
+	createBarData(){
+		let barChartData = {
+					labels: [this.state.data.coin_name], 
+					datasets: [ { 
+						label: 'Investment', 
+						backgroundColor: "#5C99B3",
+						data: []  
+					},
+					{
+						label: 'Current Holdings', 
+						data: [],
+						backgroundColor: 'rgba(255, 159, 64, 0.6)'
+					},
+					{ 
+						label: 'Return', 
+						data: [],
+						backgroundColor: "#71B37C"
+					} ] };
+				
+				let investment = this.state.data.investment.toFixed(2)
+				let net_present_value = this.state.data.net_present_value.toFixed(2)
+				let return_on_investment_dollars = this.state.data.return_on_investment_dollars.toFixed(2)
+				barChartData.datasets[0].data.push(investment);
+				barChartData.datasets[2].data.push(return_on_investment_dollars);
+				barChartData.datasets[1].data.push(net_present_value);
+				this.setState({barChartData: barChartData});
 	}
 
 	render(){
+		let roi = (commaNumber(this.state.data.return_on_investment_percent) * 100).toFixed(2);
 		let return_on_investment_dollars = (this.state.data.return_on_investment_dollars).toFixed(2);
 		let net_present_value = (this.state.data.net_present_value).toFixed(2);
 		let price_usd = (this.state.data.price_usd * 1).toFixed(2);
+		let price_per_share = (this.state.data.price_per_share).toFixed(2);
+		let { percent_change_1h, percent_change_24h, percent_change_7d } = this.state.data;
+		let price_per_share_change = (price_usd - price_per_share).toFixed(2);
 		return(
 			<div style={{margin: 1 + '%'}} className="row">
-				<Sidebar data={this.state.allCoinData} user={this.props.user} url={this.props.url} />
+				<Sidebar logout={this.props.logout} data={this.state.allCoinData} user={this.props.user} url={this.props.url} />
 					<div className="col-md-7 content mt-3 mb-5">
 	        	<div className="dashhead">
 									  <div className="dashhead-titles">
@@ -29,30 +62,72 @@ class Onecoin extends Component {
 									    <h2 className="dashhead-title">Overview</h2>
 									  </div>
 							  <div className="dashhead-toolbar" style={{display: "flex", flexDirection: "row"}}>
-							  <div className="statcard p-3">
-							  		<span className="statcard-desc">Current Price</span>
-  									<h3 className="statcard-number">
-    											${commaNumber(price_usd)}
-  									</h3>
-								</div>
 								<div className="statcard p-3">
 							  		<span className="statcard-desc">Holdings</span>
   									<h3 className="statcard-number">
     											${commaNumber(net_present_value)}
+    											<small className={this.state.deltaPort}>{roi}%</small>
   									</h3>
-								</div>
-								<div className="statcard p-3">
-							  		<span className="statcard-desc">Gain/Loss</span>
-  									<h3 className="statcard-number">
-    											${commaNumber(return_on_investment_dollars)}
-  									</h3>
+  									<small>Acquired: {this.state.data.date_of_transaction}</small>
 								</div>
 							  </div>
 							</div>
 							<div className="hr-divider">
-	  						<h3 className="hr-divider-content hr-divider-heading">Current {this.state.data.coin_name} Data</h3>
+	  						<h3 className="hr-divider-content hr-divider-heading">{this.state.data.coin_name} Data</h3>
 	  					</div>
-						</div>
+	  					<div className="row"> 
+										     	<Bar
+											          data={this.state.barChartData}
+											          options={{
+											            title:{
+											              display:true,
+											              text: 'Return and Investment Dollars',
+											              fontSize:25
+											            },
+											            legend:{
+											              display:true,
+											              position:"bottom"
+											            },
+											            responsive: true
+											          }}
+											        />
+								</div>
+								<div style={{marginTop: 2 + "%"}} className="list-group mb-3">
+											<h3 className="list-group-header">{this.state.data.coin_name} ({this.state.data.symbol})</h3>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Market Capitalization</span>
+												<span class="text-muted">${commaNumber(this.state.data.market_cap_usd)}</span>
+											</p>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Shares Owned</span>
+												<span class="text-muted">{commaNumber(this.state.data.shares)}</span>
+											</p>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Purchase Price per Share</span>
+												<span class="text-muted">${commaNumber(price_per_share)}</span>
+											</p>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Current Price per Share</span>
+												<span class="text-muted">${commaNumber(price_usd)}</span>
+											</p>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Change in Price per Share</span>
+												<span class="text-muted">${commaNumber(price_per_share_change)}</span>
+											</p>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Return on Investment Percent</span>
+												<span class="text-muted">{roi}%</span>
+											</p>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Return on Investment Dollars</span>
+												<span class="text-muted">${commaNumber(return_on_investment_dollars)}</span>
+											</p>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Current Price BTC</span>
+												<span class="text-muted">{commaNumber(this.state.data.price_btc)}</span>
+											</p>
+										</div>
+									</div>
 					</div>
 			)
 	}

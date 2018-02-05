@@ -34,7 +34,7 @@ class Sidebar extends Component {
     // console.log('event name is', event.target.name);
     // console.log('event id is', event.target.id);
     // console.log('event symbol is', event.target.value);
-    this.setState({style: "block", aria: "false", modalClass: 'modal fade show', coin: event.target.name, coinId: event.target.id, symbol: event.target.value})
+    this.setState({style: "block", aria: "false", modalClass: 'modal fade show', coin: event.target.name, coinId: event.target.id, symbol: event.target.value, searched: false, value: "", searchResults: []})
   }
 
   toggleNav(){

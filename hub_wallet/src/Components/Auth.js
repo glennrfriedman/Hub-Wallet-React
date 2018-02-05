@@ -74,6 +74,7 @@ class UserAuth extends Component {
         <Route path="/hub" render={props => this.requireUser(<Hub user={this.state.user} url={this.state.url} logout={this.logout} />)}/>
         <Route path="/coin/:coin_id" render={props => this.requireUser(<Onecoin user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
         <Route path="/portfolio" render={props => this.requireUser(<Portfolio user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
+        <Route path="/all_coins" render={props => this.requireUser(<Portfolio user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
       </Switch>
       )
   }

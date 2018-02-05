@@ -129,7 +129,7 @@ class Portfolio extends Component {
 		// let data = this.createChartObj();
 		return(
 				<div style={{margin: 1 + '%'}} className="row">
-					<Sidebar user={this.props.user} url={this.props.url} />
+					<Sidebar logout={this.props.logout} user={this.props.user} url={this.props.url} />
 						<div className="col-md-7 content mt-3 mb-5">
 								<div className="dashhead">
 											  <div className="dashhead-titles">
