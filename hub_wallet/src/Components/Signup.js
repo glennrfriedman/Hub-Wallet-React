@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, InputGroup, ButtonGroup } from 'react-bootstrap';
+import { FormGroup, FormControl, InputGroup } from 'react-bootstrap';
+import { ModalFooter, Button } from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
 import axios from 'axios';
 // import './toolkit-light.min.css';
@@ -67,10 +68,10 @@ class Signup extends Component {
             <FormControl type="password" placeholder="Confirm password" value={this.state.inputs.password_confirmation} onChange={e => this.changeInput(e, 'password_confirmation')} />
           </InputGroup>
         </FormGroup>
-        <ButtonGroup>
-          <button type="submit" className="btn btn-lg btn-pill btn-success">Sign Up</button>
-          <button onClick={this.props.toggleMode} className="btn btn-lg btn-pill btn-primary">Log In</button>
-        </ButtonGroup>
+        <ModalFooter>
+          <Button type="submit" color="success">Sign Up</Button>
+          <Button onClick={this.props.toggleMode} color="primary">Log In</Button>
+        </ModalFooter>
         </form>
     );
   }

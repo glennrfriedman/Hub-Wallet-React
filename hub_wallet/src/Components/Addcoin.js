@@ -9,6 +9,7 @@ class Addcoin extends Component {
     this.state = { total_investment: 0, shares: 0, date_of_transaction: ''};
     this.saveCoin = this.saveCoin.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.afterSaveCoin = this.afterSaveCoin.bind(this);
   }
 
   onChange(e) {
@@ -17,9 +18,15 @@ class Addcoin extends Component {
     })
   }
 
+  afterSaveCoin(){
+    this.props.closeModal();
+    this.props.getData(this.props.user.id);
+    <Redirect to="/hub" />
+  }
+
   saveCoin(event) {
     event.preventDefault();
-    console.log(this.props);
+    // console.log(this.props);
     axios.post(`${this.props.url}/api/save`, {
         user_id: this.props.user.id,
         coin_name: this.props.coin,
@@ -30,9 +37,7 @@ class Addcoin extends Component {
         symbol: this.props.symbol
       }).then(res => {
         // console.log(res);
-        this.props.closeModal();
-        this.props.getData(this.props.user.id);
-        <Redirect to="/hub" />
+        this.afterSaveCoin();
       })
   }
 

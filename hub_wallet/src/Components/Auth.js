@@ -7,6 +7,7 @@ import Landing from './Landing';
 import Hub from './Hub';
 import Onecoin from './Onecoin';
 import Portfolio from './Portfolio';
+import Ticker from './Ticker';
 
 class UserAuth extends Component {
    constructor(){
@@ -74,7 +75,7 @@ class UserAuth extends Component {
         <Route path="/hub" render={props => this.requireUser(<Hub user={this.state.user} url={this.state.url} logout={this.logout} />)}/>
         <Route path="/coin/:coin_id" render={props => this.requireUser(<Onecoin user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
         <Route path="/portfolio" render={props => this.requireUser(<Portfolio user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
-        <Route path="/all_coins" render={props => this.requireUser(<Portfolio user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
+        <Route path="/all_coins" render={props => this.requireUser(<Ticker user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
       </Switch>
       )
   }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import commaNumber from 'comma-number';
+// import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import Sidebar from './Sidebar';
 
@@ -7,12 +8,19 @@ class Onecoin extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = { data: this.props.routeProps.location.state.data, allCoinData: this.props.routeProps.location.state.allCoinData, deltaPort: this.props.routeProps.location.state.deltaPort }
+		this.state = { 
+					data: this.props.routeProps.location.state.data, 
+					allCoinData: this.props.routeProps.location.state.allCoinData, 
+					deltaPort: this.props.routeProps.location.state.deltaPort
+				}
 		this.createBarData = this.createBarData.bind(this);
+		// this.getData = this.getData.bind(this);
 	}
 
 	componentDidMount(){
-		console.log('data in Onecoin is', this.state.data )
+		// console.log('data in Onecoin is', this.state.data );
+		// console.log('routeProps in oneCoin are', this.props.routeProps);
+		// console.log('getData in oneCoin is', this.props.routeProps.location.getData);
 		this.createBarData();
 	}
 
@@ -54,7 +62,7 @@ class Onecoin extends Component {
 		let price_per_share_change = (price_usd - price_per_share).toFixed(2);
 		return(
 			<div style={{margin: 1 + '%'}} className="row">
-				<Sidebar logout={this.props.logout} data={this.state.allCoinData} user={this.props.user} url={this.props.url} />
+				<Sidebar logout={this.props.logout} data={this.state.allCoinData} user={this.props.user} url={this.props.url} getData={this.props.routeProps.location.getData} />
 					<div className="col-md-7 content mt-3 mb-5">
 	        	<div className="dashhead">
 									  <div className="dashhead-titles">
@@ -96,35 +104,47 @@ class Onecoin extends Component {
 											<h3 className="list-group-header">{this.state.data.coin_name} ({this.state.data.symbol})</h3>
 											<p className="list-group-item list-group-item-action justify-content-between d-flex">
 												<span>Market Capitalization</span>
-												<span class="text-muted">${commaNumber(this.state.data.market_cap_usd)}</span>
+												<span className="text-muted">${commaNumber(this.state.data.market_cap_usd)}</span>
 											</p>
 											<p className="list-group-item list-group-item-action justify-content-between d-flex">
 												<span>Shares Owned</span>
-												<span class="text-muted">{commaNumber(this.state.data.shares)}</span>
+												<span className="text-muted">{commaNumber(this.state.data.shares)}</span>
 											</p>
 											<p className="list-group-item list-group-item-action justify-content-between d-flex">
 												<span>Purchase Price per Share</span>
-												<span class="text-muted">${commaNumber(price_per_share)}</span>
+												<span className="text-muted">${commaNumber(price_per_share)}</span>
 											</p>
 											<p className="list-group-item list-group-item-action justify-content-between d-flex">
 												<span>Current Price per Share</span>
-												<span class="text-muted">${commaNumber(price_usd)}</span>
+												<span className="text-muted">${commaNumber(price_usd)}</span>
 											</p>
 											<p className="list-group-item list-group-item-action justify-content-between d-flex">
-												<span>Change in Price per Share</span>
-												<span class="text-muted">${commaNumber(price_per_share_change)}</span>
+												<span>Dollar Change in Price per Share (Holdings)</span>
+												<span className="text-muted">${commaNumber(price_per_share_change)}</span>
+											</p>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Percent Change in Price per Share (1h)</span>
+												<span className="text-muted">{commaNumber(percent_change_1h)}%</span>
+											</p>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Percent Change in Price per Share (24h)</span>
+												<span className="text-muted">{commaNumber(percent_change_24h)}%</span>
+											</p>
+											<p className="list-group-item list-group-item-action justify-content-between d-flex">
+												<span>Percent Change in Price per Share (7d)</span>
+												<span className="text-muted">{commaNumber(percent_change_7d)}%</span>
 											</p>
 											<p className="list-group-item list-group-item-action justify-content-between d-flex">
 												<span>Return on Investment Percent</span>
-												<span class="text-muted">{roi}%</span>
+												<span className="text-muted">{roi}%</span>
 											</p>
 											<p className="list-group-item list-group-item-action justify-content-between d-flex">
 												<span>Return on Investment Dollars</span>
-												<span class="text-muted">${commaNumber(return_on_investment_dollars)}</span>
+												<span className="text-muted">${commaNumber(return_on_investment_dollars)}</span>
 											</p>
 											<p className="list-group-item list-group-item-action justify-content-between d-flex">
 												<span>Current Price BTC</span>
-												<span class="text-muted">{commaNumber(this.state.data.price_btc)}</span>
+												<span className="text-muted">{commaNumber(this.state.data.price_btc)}</span>
 											</p>
 										</div>
 									</div>

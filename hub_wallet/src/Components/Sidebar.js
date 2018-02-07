@@ -11,6 +11,7 @@ class Sidebar extends Component {
     super(props, context);
     this.state = {
       value: "",
+      mode: 'hub',
       searchResults: [],
       searched: false,
       show: false,
@@ -127,7 +128,11 @@ class Sidebar extends Component {
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">{this.props.user.first_name} {this.props.user.last_name}'s Portfolio</li>
               <li className="nav-item">
-                <Link className="nav-link active" to="/hub">Current Holdings</Link>
+                {this.state.mode === 'hub' ? (
+                  <Link className="nav-link" to="/hub">Current Holdings</Link>
+                  ): (
+                  <Link className="nav-link" to="/hub">Current Holdings</Link>
+                  )}
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user, delta: this.props.delta } }}>My Portfolio</Link>
@@ -136,7 +141,7 @@ class Sidebar extends Component {
                 <a className="nav-link">Tax Calculation</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link">All Coins</a>
+                <Link className="nav-link" to={{ pathname: "/all_coins", getData: this.state.getData, state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData } }}>Market Data</Link>
               </li>
             </ul>
             <hr className="visible-xs mt-3"></hr>

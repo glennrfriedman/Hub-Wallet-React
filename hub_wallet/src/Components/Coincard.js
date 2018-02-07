@@ -2,23 +2,40 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import commaNumber from 'comma-number';
+import {Modal, ModalHeader, ModalBody, ModalFooter, Button, ButtonGroup } from 'reactstrap';
 
 class Coincard extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = { rowName: this.props.rowName, data: this.props.data }
+		this.state = { rowName: this.props.rowName, data: this.props.data, getData: this.props.getData, modal: false, isOpen: false }
 		this.clickCard = this.clickCard.bind(this);
 		this.checkDeltaPort = this.checkDeltaPort.bind(this);
 		this.checkDeltaPrice = this.checkDeltaPrice.bind(this);
 		this.checkStatColor = this.checkStatColor.bind(this);
 		this.onClickDelete = this.onClickDelete.bind(this);
+		this.toggle = this.toggle.bind(this);
+		this.toggleModal = this.toggleModal.bind(this);
 	}
 
 	componentDidMount(){
+		// console.log('getData in coincard is', this.state.getData);
 		this.checkDeltaPort();
 		this.checkDeltaPrice();
 		this.checkStatColor();
+	}
+
+	toggle(){
+		this.setState({
+      isOpen: !this.state.isOpen
+    });
+	}
+
+	toggleModal(event){
+		// console.log('event in toggleModal is', event.target.className);
+		this.setState({
+       modal: !this.state.modal
+    });
 	}
 
 	onClickDelete(){
@@ -84,11 +101,21 @@ class Coincard extends Component {
 	    			<small className={this.state.deltaPort}>{roi}%</small>
 	  				</h3>
 	  		<div className="text-xs-right">
-	  		 			<Link to={{ pathname: link, state: { data: this.props.data, allCoinData: this.props.allCoinData, deltaPort: this.state.deltaPort } }}><span style={{margin: 2 + "%", color: 'white'}} className="icon icon-line-graph"></span></Link>
+	  		 			<Link to={{ pathname: link, getData: this.state.getData, state: { data: this.props.data, allCoinData: this.props.allCoinData, deltaPort: this.state.deltaPort } }}><span style={{margin: 2 + "%", color: 'white'}} className="icon icon-line-graph"></span></Link>
 							<span style={{margin: 2 + "%"}} className="icon icon-info"></span>
-							<span onClick={this.onClickDelete} style={{margin: 2 + "%"}} className="icon icon-trash"></span>
+							<span onClick={this.toggleModal} style={{margin: 2 + "%"}} className="icon icon-trash"></span>
 				</div>
 				</div>
+				<Modal isOpen={this.state.modal} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggleModal}>Delete</ModalHeader>
+          <ModalBody>
+            	Are you sure you want to delete {this.props.data.coin_name}?
+          </ModalBody>
+          <ModalFooter>
+          	<Button onClick={this.onClickDelete} color="danger">Delete</Button>
+          	<Button onClick={this.toggleModal} color="primary">Cancel</Button>
+          </ModalFooter>
+     		</Modal>
 			</div>
 		)
 	}

@@ -18,6 +18,14 @@ class Hub extends Component {
 		this.checkSign = this.checkSign.bind(this);
 	}
 
+	// componentWillMount(){
+	// 	this.getData(this.props.user.id);
+	// }
+
+	componentWillReceiveProps(nextProps){
+  	this.getData(nextProps);
+	}	
+
 	componentDidMount(){
 		this.getData(this.props.user.id);
 	}

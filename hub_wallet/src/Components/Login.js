@@ -1,7 +1,8 @@
 import React, { Component } from 'react'; 
-import { FormGroup, FormControl, InputGroup, ButtonGroup } from 'react-bootstrap';
+import { FormGroup, FormControl, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import FontAwesome from 'react-fontawesome';
+import { ModalFooter, Button } from 'reactstrap';
 
 // login component
 // this will render when the user auth mode is set to login
@@ -52,10 +53,10 @@ class Login extends Component {
             <FormControl type="password" placeholder="Password" value={this.state.inputs.password} onChange={e => this.changeInput(e, "password")} />
           </InputGroup>
         </FormGroup>
-        <ButtonGroup>
-          <button type="submit" className="btn btn-lg btn-pill btn-success">Log In</button>
-          <button onClick={this.props.toggleMode} className="btn btn-lg btn-pill btn-primary">Register</button>
-        </ButtonGroup>
+        <ModalFooter>
+          <Button type="submit" color="success">Log In</Button>
+          <Button onClick={this.props.toggleMode} color="primary">Sign Up</Button>
+        </ModalFooter>
         </form>
     )
   }

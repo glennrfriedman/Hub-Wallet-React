@@ -27,7 +27,7 @@ class Portfolio extends Component {
 	}
 
 	createDoughnutData(){
-		let { total_investment, total_roi_dollars, total_npv } = this.state.data.portfolio
+		let { total_investment, total_roi_dollars } = this.state.data.portfolio
 		let doughnutData = {
 					labels: ['Investment', 'Return'], 
 					datasets: [ { 
@@ -97,8 +97,8 @@ class Portfolio extends Component {
 					} ] };
 		this.state.data.savedCoinData.forEach(function(coin){
 				let percentTotalPortfolio = ((coin.investment/total_investment)*100).toFixed(2)
-				let net_present_value = coin.net_present_value.toFixed(2)
-				let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
+				// let net_present_value = coin.net_present_value.toFixed(2)
+				// let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
 				pieChartData.labels.push(coin.coin_name);
 				pieChartData.datasets[0].data.push(percentTotalPortfolio);
 			return pieChartData;
@@ -115,13 +115,13 @@ class Portfolio extends Component {
 		// console.log(this.state.user)
 		// console.log('chartData in render is ', this.state.chartData)
 		// console.log('data in portfolio is', this.state.data);
-		let style = {
-			  boxSizing: "border-box",
-  			padding: 10 + "px",
-  			width: 800 + "px",
-  			height: 800 + "px",
-  			backgroundColor: "#fff"
-		}
+		// let style = {
+		// 	  boxSizing: "border-box",
+  // 			padding: 10 + "px",
+  // 			width: 800 + "px",
+  // 			height: 800 + "px",
+  // 			backgroundColor: "#fff"
+		// }
 		// const investmentData = this.createPieObj();
 		// console.log('investmentData is', investmentData);
 		// const returnData = this.createPieObj2();
