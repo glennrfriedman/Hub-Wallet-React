@@ -91,7 +91,7 @@ class Hub extends Component {
 	        	<div className="col-md-7 content mt-3 mb-5">
 	        		{this.state.dataReceived && <div className="dashhead">
 									  <div className="dashhead-titles">
-									    <h6 className="dashhead-subtitle">Portfolio</h6>
+									    <h6 className="dashhead-subtitle">Hub</h6>
 									    <h2 className="dashhead-title">Overview</h2>
 									  </div>
 							  <div className="dashhead-toolbar" style={{display: "flex", flexDirection: "row"}}>

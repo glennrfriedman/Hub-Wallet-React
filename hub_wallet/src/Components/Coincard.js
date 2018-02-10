@@ -3,12 +3,13 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import commaNumber from 'comma-number';
 import {Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import Editcoin from './Editcoin';
 
 class Coincard extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = { rowName: this.props.rowName, data: this.props.data, getData: this.props.getData, modal: false, isOpen: false }
+		this.state = { rowName: this.props.rowName, data: this.props.data, getData: this.props.getData, modal: false, isOpen: false, editModal: false, editModalisOpen: false}
 		this.clickCard = this.clickCard.bind(this);
 		this.checkDeltaPort = this.checkDeltaPort.bind(this);
 		this.checkDeltaPrice = this.checkDeltaPrice.bind(this);
@@ -16,6 +17,8 @@ class Coincard extends Component {
 		this.onClickDelete = this.onClickDelete.bind(this);
 		this.toggle = this.toggle.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
+		this.editToggle = this.editToggle.bind(this);
+		this.toggleEditModal = this.toggleEditModal.bind(this);
 	}
 
 	componentDidMount(){
@@ -31,10 +34,23 @@ class Coincard extends Component {
     });
 	}
 
+	editToggle(){
+		this.setState({
+      editModalisOpen: !this.state.editModalisOpen
+    });
+	}
+
+
 	toggleModal(event){
 		// console.log('event in toggleModal is', event.target.className);
 		this.setState({
        modal: !this.state.modal
+    });
+	}
+
+	toggleEditModal(event){
+		this.setState({
+       editModal: !this.state.editModal
     });
 	}
 
@@ -102,7 +118,7 @@ class Coincard extends Component {
 	  				</h4>
 	  		<div className="text-xs-right">
 	  		 			<Link to={{ pathname: link, getData: this.state.getData, state: { data: this.props.data, allCoinData: this.props.allCoinData, deltaPort: this.state.deltaPort } }}><span style={{margin: 2 + "%", color: 'white'}} className="icon icon-line-graph"></span></Link>
-							<span style={{margin: 2 + "%"}} className="icon icon-info"></span>
+							<span onClick={this.toggleEditModal} style={{margin: 2 + "%"}} className="icon icon-info"></span>
 							<span onClick={this.toggleModal} style={{margin: 2 + "%"}} className="icon icon-trash"></span>
 				</div>
 				</div>
@@ -115,6 +131,12 @@ class Coincard extends Component {
           	<Button onClick={this.onClickDelete} color="danger">Delete</Button>
           	<Button onClick={this.toggleModal} color="primary">Cancel</Button>
           </ModalFooter>
+     		</Modal>
+     		<Modal className="modal-sm" isOpen={this.state.editModal} toggle={this.editToggle}>
+          <ModalHeader toggle={this.toggleEditModal}>Edit {this.props.data.coin_name} Holdings</ModalHeader>
+          <ModalBody style={{display: "flex", justifyContent: "center"}}>
+            	<Editcoin user={this.props.user} data={this.props.data} getData={this.props.getData} url={this.props.url} handleModal={this.toggleEditModal} />
+          </ModalBody>
      		</Modal>
 			</div>
 		)

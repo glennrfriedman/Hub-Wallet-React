@@ -66,8 +66,8 @@ class News extends Component {
 						<div class="column">
 	        	<div className="dashhead">
 									<div className="dashhead-titles">
-									    <h6 className="dashhead-subtitle">News</h6>
-									    <h2 className="dashhead-title">Hub</h2>
+									    <h6 className="dashhead-subtitle">Hub</h6>
+									    <h2 className="dashhead-title">News</h2>
 									 </div>
 									 <div className="dashhead-toolbar" style={{display: "flex", flexDirection: "row"}}>
   										<small>Powered by newsAPI.org</small>

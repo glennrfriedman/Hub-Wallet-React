@@ -129,19 +129,16 @@ class Sidebar extends Component {
               <ul className="list-group">{this.state.searched && this.displaySearchResults()}</ul>
             </form>
             <ul className="nav nav-pills nav-stacked flex-column">
-              <li className="nav-header">{this.props.user.first_name} {this.props.user.last_name}'s Portfolio</li>
+              <li className="nav-header">{this.props.user.first_name} {this.props.user.last_name}'s Hub</li>
               <li className="nav-item">
                 {this.state.mode === 'hub' ? (
-                  <Link className="nav-link" to="/hub">Current Holdings</Link>
+                  <Link className="nav-link" to="/hub">Overview</Link>
                   ): (
-                  <Link className="nav-link" to="/hub">Current Holdings</Link>
+                  <Link className="nav-link" to="/hub">Overview</Link>
                   )}
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user, delta: this.props.delta } }}>My Portfolio</Link>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link">Tax Calculation</a>
+                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user, delta: this.props.delta } }}>Portfolio</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to={{ pathname: "/all_coins", getData: this.state.getData, state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData } }}>Market Data</Link>
@@ -162,7 +159,7 @@ class Sidebar extends Component {
         <Modal className="modal-sm" isOpen={this.state.modal} toggle={this.toggleIsOpen}>
           <ModalHeader toggle={this.handleModal}>Add {this.state.coin} ({this.state.symbol}) to Portfolio:</ModalHeader>
           <ModalBody style={{display: "flex", justifyContent: "center"}}>
-              <Addcoin getData={this.props.getData} url={this.props.url} user={this.props.user} coinData={this.getCoinInfo} style={this.state.style} handleModal={this.handleModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} click={this.clickedCoin} />
+              <Addcoin getData={this.props.getData} url={this.props.url} user={this.props.user} handleModal={this.handleModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} click={this.clickedCoin} />
           </ModalBody>
         </Modal>
       </div>
