@@ -11,16 +11,12 @@ class Hub extends Component {
 
 	constructor(props){
 		super(props)
-		this.state = { dataReceived: false }
+		this.state = { dataReceived: false, loader: true }
 		this.renderCoinCards = this.renderCoinCards.bind(this);
 		this.renderStatusBar = this.renderStatusBar.bind(this);
 		this.getData = this.getData.bind(this);
 		this.checkSign = this.checkSign.bind(this);
 	}
-
-	// componentWillMount(){
-	// 	this.getData(this.props.user.id);
-	// }
 
 	componentWillReceiveProps(nextProps){
   	this.getData(nextProps);

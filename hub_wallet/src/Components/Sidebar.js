@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
+import {Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 // import commaNumber from 'comma-number';
 import { Link } from 'react-router-dom';
 import Addcoin from './Addcoin';
@@ -15,27 +15,39 @@ class Sidebar extends Component {
       searchResults: [],
       searched: false,
       show: false,
-      showModal: 'hidden',
-      modalClass: 'modal fade',
-      toggleNav: "nav-toggleable-md collapse",
+      // showModal: 'hidden',
+      // modalClass: 'modal fade',
+      toggleNav: "nav-toggleable-md collapse", 
       ariaNav: 'false',
-      navButtonClass: "nav-toggler nav-toggler-md sidebar-toggler collapsed"
+      navButtonClass: "nav-toggler nav-toggler-md sidebar-toggler collapsed",
+      modal: false, 
+      isOpen: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.searchCoins = this.searchCoins.bind(this);
     this.clickedCoin = this.clickedCoin.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.getCoinInfo = this.getCoinInfo.bind(this);
+    this.handleModal = this.handleModal.bind(this);
     this.toggleNav = this.toggleNav.bind(this);
+    this.toggleIsOpen = this.toggleIsOpen.bind(this);
+  }
+
+  toggleIsOpen(){
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
   }
 
   clickedCoin(event){
-    // event.preventDefault();
-    // console.log('searched coin clicked');
-    // console.log('event name is', event.target.name);
-    // console.log('event id is', event.target.id);
-    // console.log('event symbol is', event.target.value);
-    this.setState({style: "block", aria: "false", modalClass: 'modal fade show', coin: event.target.name, coinId: event.target.id, symbol: event.target.value, searched: false, value: "", searchResults: []})
+    this.handleModal();
+    this.setState({
+      coin: event.target.name, 
+      coinId: event.target.id, 
+      symbol: event.target.value,
+      searched: false,
+      value: "",
+      searchResults: []
+    });
+     // }, () => console.log(this.state) )
   }
 
   toggleNav(){
@@ -47,13 +59,9 @@ class Sidebar extends Component {
     }
   }
 
-  closeModal(){
+  handleModal(){
     // console.log('modal closed');
-    this.setState({style: "none", aria: "true", modalClass: 'modal fade'})
-  }
-
-  getCoinInfo(id, name, symbol){
-    console.log(id, name, symbol);
+    this.setState({ modal: !this.state.modal })
   }
 
   handleChange(event) {
@@ -99,11 +107,6 @@ class Sidebar extends Component {
   }
 
   render(){
-
-    // const logoStlye = {
-    //   alignSelf: "center"
-    // }
-
     return (
       <div className="col-md-3 sidebar">
         <nav className="sidebar-nav">
@@ -143,6 +146,9 @@ class Sidebar extends Component {
               <li className="nav-item">
                 <Link className="nav-link" to={{ pathname: "/all_coins", getData: this.state.getData, state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData } }}>Market Data</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={{ pathname: "/news", getData: this.state.getData, state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData } }}>News</Link>
+              </li>
             </ul>
             <hr className="visible-xs mt-3"></hr>
             <ul className="nav nav-pills nav-stacked flex-column">
@@ -152,7 +158,13 @@ class Sidebar extends Component {
             </ul>
           </div>
         </nav>
-        <Addcoin getData={this.props.getData} url={this.props.url} user={this.props.user} coinData={this.getCoinInfo} modalClass={this.state.modalClass} aria={this.state.aria} style={this.state.style} closeModal={this.closeModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} />
+        {/*<Addcoin getData={this.props.getData} url={this.props.url} user={this.props.user} coinData={this.getCoinInfo} modalClass={this.state.modalClass} aria={this.state.aria} style={this.state.style} closeModal={this.closeModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} />*/}
+        <Modal className="modal-sm" isOpen={this.state.modal} toggle={this.toggleIsOpen}>
+          <ModalHeader toggle={this.handleModal}>Add {this.state.coin} ({this.state.symbol}) to Portfolio:</ModalHeader>
+          <ModalBody style={{display: "flex", justifyContent: "center"}}>
+              <Addcoin getData={this.props.getData} url={this.props.url} user={this.props.user} coinData={this.getCoinInfo} style={this.state.style} handleModal={this.handleModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} click={this.clickedCoin} />
+          </ModalBody>
+        </Modal>
       </div>
     )
   }

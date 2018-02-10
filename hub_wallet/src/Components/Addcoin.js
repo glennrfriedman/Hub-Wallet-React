@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-// import { Form, FormGroup, Col, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import { FormGroup, FormControl, InputGroup, Form, ModalFooter, Button, Label, Input, InputGroupAddon } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
+import cors from 'cors';
 import axios from 'axios';
 
 class Addcoin extends Component {
@@ -19,14 +21,15 @@ class Addcoin extends Component {
   }
 
   afterSaveCoin(){
-    this.props.closeModal();
+    this.props.handleModal();
     this.props.getData(this.props.user.id);
     <Redirect to="/hub" />
   }
 
   saveCoin(event) {
+    console.log('inputs are ', this.state.total_investment, this.state.shares, this.state.date_of_transaction)
     event.preventDefault();
-    // console.log(this.props);
+    console.log(this.props.user);
     axios.post(`${this.props.url}/api/save`, {
         user_id: this.props.user.id,
         coin_name: this.props.coin,
@@ -43,46 +46,34 @@ class Addcoin extends Component {
 
   render() {
       return (
-        <div id="docsModal" className={this.props.modalClass} tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" style={{display: this.props.style}} aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h4 className="modal-title" id="myModalLabel">Add {this.props.coin} ({this.props.symbol}) to Portfolio:</h4>
-                  <button onClick={this.props.closeModal} type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden={this.props.aria}>×</span></button>
-                </div>
-                <form className="modal-body" onSubmit={this.saveCoin}>
-                <div style={{display: "flex", flexDirection: "column"}}>
-                  <div className="form-group container-fluid">
-                    <label className="col-form-label">Investment:</label><br></br>
+              <Form onSubmit={this.saveCoin}>
+                  <FormGroup>
+                        <Label>Investment:</Label><br></br>
                         <div className="input-with-icon">
-                            <input name="total_investment" type="investment" placeholder="Total Investment" className="form-control" value={this.state.total_investment} onChange={this.onChange}/>
+                            <input name="total_investment" type="investment" placeholder="Total Investment" className="form-control"value={this.state.total_investment} onChange={this.onChange}/>
                             <span className="icon icon-credit"></span>
                         </div>
-                  </div>
-                  <div className="form-group container-fluid">
-                    <label className="col-form-label">Number of Shares:</label><br></br>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label>Number of Shares:</Label><br></br>
                     <div className="input-with-icon">
                             <input name="shares" type="shares" placeholder="Number of Shares" className="form-control" value={this.state.shares} onChange={this.onChange}/>
                             <span className="icon icon-line-graph"></span>
                     </div>
-                </div>
-                <div className="form-group container-fluid">
-                    <label className="col-form-label">Date of Transaction:</label><br></br>
+                </FormGroup>
+                <FormGroup>
+                    <Label>Date of Transaction:</Label><br></br>
                     <div className="input-with-icon">
                             <input name='date_of_transaction' type="date_of_transaction" placeholder="Date (MM/DD/YYYY)" className="form-control" value={this.state.date_of_transaction} onChange={this.onChange}/>
                             <span className="icon icon-calendar"></span>
                     </div>
-                </div>
-                </div>
-                    <div className="modal-footer">
-                        <input className="btn btn-primary" type='submit' value='Save Coin' />
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-    );
-  }
-}
+                </FormGroup>
+                <ModalFooter>
+                      <input className="btn btn-primary" type='submit' value='Save Coin' />
+                </ModalFooter>
+                </Form>
+            );
+        }
+    }
 
 export default Addcoin;

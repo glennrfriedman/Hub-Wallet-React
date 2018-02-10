@@ -15,11 +15,13 @@ class Ticker extends Component {
 		this.state = {
 			url: URL,
 			marketUrl: MARKETURL,
+			tickerData: [],
 			dataReceived: false
 		}
 		this.getTickerData = this.getTickerData.bind(this);
 		this.getMarketData = this.getMarketData.bind(this);
 		this.renderTickerData = this.renderTickerData.bind(this);
+		this.convertMarketData = this.convertMarketData.bind(this);
 	}
 
 	componentDidMount(){
@@ -30,8 +32,9 @@ class Ticker extends Component {
 	getTickerData() {
 		axios.get(this.state.url)
 		.then(data => {
-			this.setState({ tickerData: data.data, dataReceived: true });
-			console.log('data from ticker is', data.data);
+			this.setState({ tickerData: data.data });
+			this.convertMarketData(data.data);
+			// console.log('data from ticker is', data.data);
 		})
 	}
 
@@ -39,8 +42,36 @@ class Ticker extends Component {
 		axios.get(this.state.marketUrl)
 		.then(data => {
 			this.setState({ marketData: data.data });
-			console.log('data from market is', data.data);
+			// console.log('data from market is', data.data);
 		})
+	}
+
+	convertMarketData(data){
+			console.log('tickerData in conv. market data', data)
+			let tableData = [];
+			data.forEach(coin => {
+			let name = coin.name
+			let rank = coin.rank * 1
+			let price_usd = "$" + commaNumber(coin.price_usd)
+			let price_btc = coin.price_btc * 1
+			let market_cap_usd = "$" + commaNumber(coin.market_cap_usd)
+			// let available_supply = coin.available_supply * 1
+			let percent_change_1h = commaNumber(coin.percent_change_1h) + "%"
+			let percent_change_24h = commaNumber(coin.percent_change_24h) + "%"
+			let percent_change_7d = commaNumber(coin.percent_change_7d) + "%"
+			tableData.push({
+					rank: rank, 
+					name: name,
+					price_usd: price_usd,
+					price_btc: price_btc, 
+					market_cap_usd: market_cap_usd,
+					percent_change_24h: percent_change_24h, 
+					percent_change_1h: percent_change_1h,
+					percent_change_7d: percent_change_7d
+			})
+			this.setState({tableData: tableData});
+		})
+		this.setState({dataReceived: true});
 	}
 
 	renderTickerData(){
@@ -70,7 +101,7 @@ class Ticker extends Component {
 	}
 
 	render(){
-		console.log('data in render is', this.state.tickerData);
+		// console.log('table data in render is', this.state.tableData);
 		return(
 			<div style={{margin: 1 + '%'}} className="row">
 				<Sidebar logout={this.props.logout} data={this.state.allCoinData} user={this.props.user} url={this.props.url} getData={this.props.routeProps.location.getData} />
@@ -87,7 +118,7 @@ class Ticker extends Component {
 	  						<h3 className="hr-divider-content hr-divider-heading">Current Market Data</h3>
 	  				</div>
 	  			{this.state.dataReceived &&
-	  					<MarketTable tickerData={this.state.tickerData} marketData={this.state.marketData} /> }
+	  					<MarketTable tickerData={this.state.tableData} marketData={this.state.marketData} /> }
 	  		</div>
 	  	</div>
 			)

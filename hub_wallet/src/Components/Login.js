@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; 
-import { FormGroup, FormControl, InputGroup } from 'react-bootstrap';
+import { FormGroup, FormControl, InputGroup, Form } from 'react-bootstrap';
 import axios from 'axios';
 import FontAwesome from 'react-fontawesome';
 import { ModalFooter, Button } from 'reactstrap';
@@ -40,7 +40,7 @@ class Login extends Component {
 
   render(){
     return(
-        <form onSubmit={this.login.bind(this)}>
+        <Form onSubmit={this.login.bind(this)}>
         <FormGroup>
           <InputGroup>
             <InputGroup.Addon><FontAwesome name="fas fa-at"/></InputGroup.Addon>
@@ -57,7 +57,7 @@ class Login extends Component {
           <Button type="submit" color="success">Log In</Button>
           <Button onClick={this.props.toggleMode} color="primary">Sign Up</Button>
         </ModalFooter>
-        </form>
+        </Form>
     )
   }
 }

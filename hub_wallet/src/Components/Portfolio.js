@@ -34,8 +34,8 @@ class Portfolio extends Component {
 						label: 'Coin', 
 						data: [total_investment, total_roi_dollars],
 						backgroundColor:[
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',]  
+              '#4E6EB2',
+              '#37B237',]  
 					} ] };
 		this.setState({doughnutData: doughnutData})
 	}
@@ -45,7 +45,7 @@ class Portfolio extends Component {
 					labels: [], 
 					datasets: [ { 
 						label: 'Investment', 
-						backgroundColor: "#5C99B3",
+						backgroundColor: "#4E6EB2",
 						data: []
 						// backgroundColor:[
       //         'rgba(255, 99, 132, 0.6)',
@@ -59,15 +59,22 @@ class Portfolio extends Component {
 					{
 						label: 'Current Holdings', 
 						data: [],
-						backgroundColor: 'rgba(255, 159, 64, 0.6)'
+						backgroundColor: '#FFE130'
 					},
 					{ 
 						label: 'Return', 
 						data: [],
-						backgroundColor: "#71B37C"
+						backgroundColor: "#37B237"
 					} ] };
 		this.state.data.savedCoinData.forEach(function(coin){
 				let investment = coin.investment.toFixed(2)
+				let backgroundColor = barChartData.datasets[2].backgroundColor
+				if (investment < 0){
+					let backgroundColor = "#FF3C24"
+				}
+				else if (investment > 0) {
+					barChartData.datasets[2].backgroundColor = "#37B237"
+				}
 				let net_present_value = coin.net_present_value.toFixed(2)
 				let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
 				barChartData.labels.push(coin.coin_name);
@@ -231,7 +238,7 @@ class Portfolio extends Component {
 											          options={{
 											            title:{
 											              display:true,
-											              text:'Portfolio Diversity by Invested Dollars',
+											              text:'Portfolio Return on Investment',
 											              fontSize:25
 											            },
 											            legend:{

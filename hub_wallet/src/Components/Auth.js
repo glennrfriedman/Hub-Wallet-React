@@ -8,8 +8,10 @@ import Hub from './Hub';
 import Onecoin from './Onecoin';
 import Portfolio from './Portfolio';
 import Ticker from './Ticker';
+import News from './News';
 
 class UserAuth extends Component {
+   
    constructor(){
     super();
     this.state = {
@@ -49,6 +51,7 @@ class UserAuth extends Component {
       this.props.history.push(`/hub`);
     });
     console.log(`this.state.user.email is ${this.state.user.email}`);
+    console.log(`this.state.user.id is ${this.state.user.id}`);
   }
 
   logout(){
@@ -76,6 +79,7 @@ class UserAuth extends Component {
         <Route path="/coin/:coin_id" render={props => this.requireUser(<Onecoin user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
         <Route path="/portfolio" render={props => this.requireUser(<Portfolio user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
         <Route path="/all_coins" render={props => this.requireUser(<Ticker user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
+        <Route path="/news" render={props => this.requireUser(<News user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
       </Switch>
       )
   }
