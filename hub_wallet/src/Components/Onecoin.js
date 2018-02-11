@@ -67,6 +67,7 @@ class Onecoin extends Component {
 	}
 
 	render(){
+		console.log('route props in one coin are', this.props.routeProps.location)
 		console.log('data in one coin render is ', this.state.data)
 		let roi = (commaNumber(this.state.data.return_on_investment_percent) * 100).toFixed(2);
 		let return_on_investment_dollars = (this.state.data.return_on_investment_dollars).toFixed(2);

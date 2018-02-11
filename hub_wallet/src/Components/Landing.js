@@ -6,15 +6,17 @@ import {
   Fade,
   Button, ButtonGroup,
   Modal, ModalHeader, ModalBody,
-  Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle,
   Row, Col,
+  Card, CardTitle, CardText, CardImg, CardBody, CardSubtitle, CardImgOverlay, CardGroup,
   ListGroup, ListGroupItem } from 'reactstrap';
 import Login from './Login';
 import Signup from './Signup';
 import DesktopImg from '../Assets/desktop_mockup.png'
-import Background from '../Assets/milky-way-2695569_1280.jpg'
+// import Background from '../Assets/milky-way-2695569_1280.jpg'
 import Iphone from '../Assets/iPhone.png'
+import News from '../Assets/news.png';
+import OneCoinImg from '../Assets/onecoin.png';
+import PortfolioImg from '../Assets/portfolio.png';
 
 class Landing extends Component {
 
@@ -53,15 +55,6 @@ class Landing extends Component {
 	}
 
 render(){
-  let backgroundStyle = {
-        background: backgroundStyle,
-        height: "100vh",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        position: "fixed",
-        width: "100vw"
-      }
 	return(
     <div>
       <Navbar color="light" light expand="md">
@@ -89,7 +82,7 @@ render(){
 		<Jumbotron className="container">
     	<h1 className='display-3'>Hub Wallet<span className="icon icon-wallet sidebar-brand-icon"></span></h1>
     	<Fade timeout={5} in={true} tag="p" className="lead">
-              Welcome to Hub Wallet! The Coin Market Cap companion application.
+              Welcome to Hub Wallet! The easiest way to keep track of your crypto.
       </Fade>
      	<hr className="my-2" />
       <p className="lead">
@@ -98,20 +91,16 @@ render(){
     </Jumbotron>
     <Row>
       <Col md="7">
-        <img style={{ margin: "2%" }} top width="100%" src={DesktopImg} alt="Card image cap" />
+        <img style={{ margin: "4%" }} width="100%" src={DesktopImg} alt="card1" />
       </Col>
       <Col md="3" style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-        <h1>Track your Crypto</h1>
-        <h3>The easy way</h3>
-      </Col>
-    </Row>
-    <Row>
-      <Col md="3" style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginRight: "10%", marginLeft: "1%" }}>
-        <h1>Mobile Responsive</h1>
-        <h3>Track on the Go</h3>
-      </Col>
-      <Col md="7">
-        <img style={{ width: "200px" }} top width="100%" src={Iphone} alt="Card image cap" />
+         <ListGroup>
+            <ListGroupItem active style={{textAlign: "center", fontSize: "24px", color: "white"}}>Features</ListGroupItem>
+            <ListGroupItem>Track Holdings</ListGroupItem>
+            <ListGroupItem>Live Market Data</ListGroupItem>
+            <ListGroupItem>Portfolio Graphs and Statistics</ListGroupItem>
+            <ListGroupItem>Top Crypto News</ListGroupItem>
+        </ListGroup>
       </Col>
     </Row>
 		</div>

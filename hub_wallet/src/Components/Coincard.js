@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import commaNumber from 'comma-number';
-import {Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import {Modal, ModalHeader, ModalBody, ModalFooter, Button, Tooltip } from 'reactstrap';
 import Editcoin from './Editcoin';
 
 class Coincard extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = { rowName: this.props.rowName, data: this.props.data, getData: this.props.getData, modal: false, isOpen: false, editModal: false, editModalisOpen: false}
+		this.state = { rowName: this.props.rowName, data: this.props.data, getData: this.props.getData, modal: false, isOpen: false, editModal: false, editModalisOpen: false, oneCoinTooltipOpen: false, editTooltipOpen: false, deleteTooltipOpen: false}
 		this.clickCard = this.clickCard.bind(this);
 		this.checkDeltaPort = this.checkDeltaPort.bind(this);
 		this.checkDeltaPrice = this.checkDeltaPrice.bind(this);
@@ -19,6 +19,9 @@ class Coincard extends Component {
 		this.toggleModal = this.toggleModal.bind(this);
 		this.editToggle = this.editToggle.bind(this);
 		this.toggleEditModal = this.toggleEditModal.bind(this);
+		this.toggleOneCoinTooltip = this.toggleOneCoinTooltip.bind(this);
+		this.toggleEditTooltip = this.toggleEditTooltip.bind(this);
+		this.toggleDeleteTooltip = this.toggleDeleteTooltip.bind(this);
 	}
 
 	componentDidMount(){
@@ -40,6 +43,23 @@ class Coincard extends Component {
     });
 	}
 
+	toggleOneCoinTooltip() {
+    this.setState({
+      oneCoinTooltipOpen: !this.state.oneCoinTooltipOpen
+    });
+  }
+
+  toggleEditTooltip() {
+    this.setState({
+      editTooltipOpen: !this.state.editTooltipOpen
+    });
+  }
+
+  toggleDeleteTooltip() {
+    this.setState({
+      deleteTooltipOpen: !this.state.deleteTooltipOpen
+    });
+  }
 
 	toggleModal(event){
 		// console.log('event in toggleModal is', event.target.className);
@@ -108,18 +128,27 @@ class Coincard extends Component {
 			<div className="col-sm-6">
 				<div className={this.state.statColor} onClick={this.clickCard}>
 				<span className="statcard-desc" style={{fontSize: 20 + "px", fontWeight: "heavy"}}>{this.props.data.coin_name}</span>
-						<h4 className="statcard-number">Price: 
+						<h5 className="statcard-number mt-2">Price: 
 	    				${commaNumber(this.props.data.price_usd)}
 	    				<small className={this.state.deltaPrice}>{this.props.data.percent_change_24h}%</small>
-	  				</h4><br></br>
-	 	 				<h4 className="statcard-number">Holding:
+	  				</h5><br></br>
+	 	 				<h5 className="statcard-number">Holding:
 	    				${commaNumber(this.props.data.net_present_value.toFixed(2))}
 	    			<small className={this.state.deltaPort}>{roi}%</small>
-	  				</h4>
+	  				</h5>
 	  		<div className="text-xs-right">
-	  		 			<Link to={{ pathname: link, getData: this.state.getData, state: { data: this.props.data, allCoinData: this.props.allCoinData, deltaPort: this.state.deltaPort } }}><span style={{margin: 2 + "%", color: 'white'}} className="icon icon-line-graph"></span></Link>
-							<span onClick={this.toggleEditModal} style={{margin: 2 + "%"}} className="icon icon-info"></span>
-							<span onClick={this.toggleModal} style={{margin: 2 + "%"}} className="icon icon-trash"></span>
+	  					<Tooltip placement="bottom" isOpen={this.state.oneCoinTooltipOpen} target="oneCoin" toggle={this.toggleOneCoinTooltip}>
+          			View More 
+        			</Tooltip>
+        			<Tooltip placement="bottom" isOpen={this.state.editTooltipOpen} target="edit" toggle={this.toggleEditTooltip}>
+          			Edit 
+        			</Tooltip>
+        			<Tooltip placement="bottom" isOpen={this.state.deleteTooltipOpen} target="delete" toggle={this.toggleDeleteTooltip}>
+          			Delete
+        			</Tooltip>
+	  		 			<Link id="oneCoin" to={{ pathname: link, getData: this.state.getData, state: { data: this.props.data, allCoinData: this.props.allCoinData, deltaPort: this.state.deltaPort } }}><span style={{margin: 2 + "%", color: 'white'}} className="icon icon-line-graph"></span></Link>
+							<span id="edit" onClick={this.toggleEditModal} style={{margin: 2 + "%"}} className="icon icon-info"></span>
+							<span id="delete" onClick={this.toggleModal} style={{margin: 2 + "%"}} className="icon icon-trash"></span>
 				</div>
 				</div>
 				<Modal isOpen={this.state.modal} toggle={this.toggle}>

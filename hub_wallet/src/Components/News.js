@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Sidebar from './Sidebar';
-import { Card, CardImg, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle, CardHeader, Button, CardColumns, CardFooter } from 'reactstrap';
+import { Card, CardText, CardBody, CardHeader, Button, CardColumns, CardFooter } from 'reactstrap';
  import dateformat from 'dateformat';
 
 // You can attach your API key to a request in one of three ways:
@@ -17,35 +16,38 @@ class News extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			data: [],
-			dataReceived: false
+			newsData: [],
+			dataReceived: false,
+			data: this.props.routeProps.location.state.data, 
+			// allCoinData: this.props.routeProps.location.state.allCoinData, 
+			deltaPort: this.props.routeProps.location.state.deltaPort
 		}
 		this.getNews = this.getNews.bind(this);
 		this.renderNews = this.renderNews.bind(this);
 	}
 
 	componentDidMount(){
-		console.log('hello News')
 		this.getNews();
+		console.log('this.state in news is', this.state)
 	}
 
 	getNews(){
 		axios.get(`https://newsapi.org/v2/top-headlines?sources=crypto-coins-news&apiKey=${API_KEY}`)
 			.then(response => {
-				console.log('response from news API is', response.data.articles)
-				this.setState({data: response.data.articles, dataReceived: true })
+				// console.log('response from news API is', response.data.articles)
+				this.setState({newsData: response.data.articles, dataReceived: true })
 			})
 	}
 
 	renderNews(){
 		let newsCards = [];
-		console.log('data in renderNews is', this.state.data)
-		this.state.data.forEach(article => {
+		// console.log('data in renderNews is', this.state.data)
+		this.state.newsData.forEach(article => {
 			let published = dateformat(article.publishedAt, "fullDate")
 			newsCards.push(
-				 <Card>
+				 <Card key={article.title}>
 				 	<CardHeader tag="h3">{article.title}</CardHeader>
-		        <img width="100%" src={article.urlToImage} alt="Card image cap" />
+		        <img width="100%" src={article.urlToImage} alt={article.source.name} />
 		        <CardBody>
 		          <CardText>{article.description}</CardText>
 		          <Button color="primary" href={article.url} target="_blank">Read More</Button>
@@ -59,11 +61,12 @@ class News extends Component {
 	}
 
 	render(){
+		console.log('this.routeProps are', this.props.routeProps.location)
 		return(
 		<div style={{margin: 1 + '%'}} className="row">
-				<Sidebar logout={this.props.logout} data={this.state.allCoinData} user={this.props.user} url={this.props.url} getData={this.props.routeProps.location.getData} />
+				<Sidebar logout={this.props.logout} data={this.state.data} user={this.props.user} url={this.props.url} getData={this.props.routeProps.location.getData} />
 					<div className="col-lg-8 content mt-3 mb-5">
-						<div class="column">
+						<div className="column">
 	        	<div className="dashhead">
 									<div className="dashhead-titles">
 									    <h6 className="dashhead-subtitle">Hub</h6>

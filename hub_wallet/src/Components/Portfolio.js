@@ -19,6 +19,12 @@ class Portfolio extends Component {
 		this.createDoughnutData = this.createDoughnutData.bind(this);
 		this.toggleGraph = this.toggleGraph.bind(this);
 	}
+	
+	componentWillReceiveProps(nextProps){
+  	this.createPieData();
+		this.createBarData();
+		this.createDoughnutData();
+	}	
 
 	componentDidMount(){
 		this.createPieData();
@@ -68,13 +74,6 @@ class Portfolio extends Component {
 					} ] };
 		this.state.data.savedCoinData.forEach(function(coin){
 				let investment = coin.investment.toFixed(2)
-				let backgroundColor = barChartData.datasets[2].backgroundColor
-				if (investment < 0){
-					let backgroundColor = "#FF3C24"
-				}
-				else if (investment > 0) {
-					barChartData.datasets[2].backgroundColor = "#37B237"
-				}
 				let net_present_value = coin.net_present_value.toFixed(2)
 				let return_on_investment_dollars = coin.return_on_investment_dollars.toFixed(2)
 				barChartData.labels.push(coin.coin_name);

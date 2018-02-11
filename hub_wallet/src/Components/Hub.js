@@ -16,6 +16,7 @@ class Hub extends Component {
 		this.renderStatusBar = this.renderStatusBar.bind(this);
 		this.getData = this.getData.bind(this);
 		this.checkSign = this.checkSign.bind(this);
+		this.assignRowStyle = this.assignRowStyle.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -24,6 +25,17 @@ class Hub extends Component {
 
 	componentDidMount(){
 		this.getData(this.props.user.id);
+	}
+
+	assignRowStyle(number){
+		let gain = {color: "#11E20C"}
+		let loss = {color: "#FF0215"}
+		if (number > 0){
+			return gain;
+		}
+		else if (number < 0){
+			return loss;
+		}
 	}
 
 	getData(userId) {
@@ -85,8 +97,7 @@ class Hub extends Component {
 		// 	let total_roi_percent = (this.state.savedCoinData.portfolio.total_roi_percent*100).toFixed(2);
 		// }
 		return (
-				<div style={{margin: 1 + '%'}} className="cointaner">
-				 <div className="row">
+				<div style={{margin: 1 + '%'}} className="cointaner"> <div className="row">
 	        	<Sidebar user={this.props.user} url={this.props.url} getData={this.getData} data={this.state.savedCoinData} delta={this.state.deltaIndicator} logout={this.props.logout}/>
 	        	<div className="col-md-7 content mt-3 mb-5">
 	        		{this.state.dataReceived && <div className="dashhead">
@@ -110,7 +121,7 @@ class Hub extends Component {
 								</div>
 								<div className="statcard p-3">
 							  		<span className="statcard-desc">Gain/Loss</span>
-  									<h3 className="statcard-number">
+  									<h3 className="statcard-number" style={this.assignRowStyle(this.state.savedCoinData.portfolio.total_roi_dollars)}>
     											${commaNumber(this.state.savedCoinData.portfolio.total_roi_dollars.toFixed(2))}
   									</h3>
 								</div>
@@ -120,7 +131,8 @@ class Hub extends Component {
 	  						<h3 className="hr-divider-content hr-divider-heading">Current Holdings</h3>
 	  					</div>
 							<div className="row">
-	  							{this.renderCoinCards()}
+	  							{ this.state.dataReceived && 
+	  								this.renderCoinCards() }
 	  					</div>
 						</div>
 	        </div>

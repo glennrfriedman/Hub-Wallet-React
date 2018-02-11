@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { FormGroup, FormControl, InputGroup, Form, ModalFooter, Button, Label, Input, InputGroupAddon } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import { FormGroup, Form, ModalFooter, Label } from 'react-bootstrap';
 // import cors from 'cors';
 import axios from 'axios';
 

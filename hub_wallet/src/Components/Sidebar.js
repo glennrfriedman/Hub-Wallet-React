@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import {Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
 // import commaNumber from 'comma-number';
 import { Link } from 'react-router-dom';
 import Addcoin from './Addcoin';
@@ -132,25 +132,25 @@ class Sidebar extends Component {
               <li className="nav-header">{this.props.user.first_name} {this.props.user.last_name}'s Hub</li>
               <li className="nav-item">
                 {this.state.mode === 'hub' ? (
-                  <Link className="nav-link" to="/hub">Overview</Link>
+                  <Link className="nav-link" to="/hub"><h5>Overview</h5></Link>
                   ): (
-                  <Link className="nav-link" to="/hub">Overview</Link>
+                  <Link className="nav-link" to="/hub"><h5>Overview</h5></Link>
                   )}
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user, delta: this.props.delta } }}>Portfolio</Link>
+                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user, delta: this.props.delta } }}><h5>Portfolio</h5></Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/all_coins", getData: this.state.getData, state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData } }}>Market Data</Link>
+                <Link className="nav-link" to={{ pathname: "/all_coins", getData: this.state.getData, state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData } }}><h5>Market Data</h5></Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/news", getData: this.state.getData, state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData } }}>News</Link>
+                <Link className="nav-link" to={{ pathname: "/news", state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData, delta: this.props.delta } }}><h5>News</h5></Link>
               </li>
             </ul>
             <hr className="visible-xs mt-3"></hr>
             <ul className="nav nav-pills nav-stacked flex-column">
                <li className="nav-item">
-                <a onClick={this.props.logout} className="nav-link">Logout</a>
+                <Link className="nav-link" to="/"><h5>Logout</h5></Link>
               </li>
             </ul>
           </div>
