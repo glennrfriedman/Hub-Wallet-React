@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Sidebar from './Sidebar';
 import { Card, CardText, CardBody, CardHeader, Button, CardColumns, CardFooter } from 'reactstrap';
- import dateformat from 'dateformat';
-
-// You can attach your API key to a request in one of three ways:
-// Via the apiKey querystring parameter.
-// Via the X-Api-Key HTTP header.
-// Via the Authorization HTTP header. Bearer optional, do not base 64 encode.
-// We strongly recommend the either of latter 2 so that your API key isn't visible to others in logs or request sniffing.
-let API_KEY = 'e238e021e36a4141aac512a02d5fe346';
+import dateformat from 'dateformat';
+require('dotenv').config()
+let API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 
 class News extends Component {
 
@@ -25,7 +19,7 @@ class News extends Component {
 
 	componentDidMount(){
 		this.getNews();
-		console.log('this.state in news is', this.state)
+		// console.log('this.state in news is', this.state)
 	}
 
 	getNews(){

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import commaNumber from 'comma-number';
 // import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
-import Sidebar from './Sidebar';
 
 class Onecoin extends Component {
 
@@ -28,8 +27,8 @@ class Onecoin extends Component {
 	}
 
 	assignRowStyle(number){
-		let gain = {color: "#11E20C"}
-		let loss = {color: "#FF0215"}
+		let gain = {color: "#00B145"}
+		let loss = {color: "#FF312B"}
 		if (number > 0){
 			return gain;
 		}
@@ -43,18 +42,18 @@ class Onecoin extends Component {
 					labels: [this.state.data.coin_name], 
 					datasets: [ { 
 						label: 'Investment', 
-						backgroundColor: "#5C99B3",
+						backgroundColor: "#2E54C8",
 						data: []  
 					},
 					{
 						label: 'Current Holdings', 
 						data: [],
-						backgroundColor: 'rgba(255, 159, 64, 0.6)'
+						backgroundColor: '#FF7C26'
 					},
 					{ 
 						label: 'Return', 
 						data: [],
-						backgroundColor: "#71B37C"
+						backgroundColor: "#100F12"
 					} ] };
 				
 				let investment = this.state.data.investment.toFixed(2)
@@ -67,8 +66,8 @@ class Onecoin extends Component {
 	}
 
 	render(){
-		console.log('route props in one coin are', this.props.routeProps.location)
-		console.log('data in one coin render is ', this.state.data)
+		// console.log('route props in one coin are', this.props.routeProps.location)
+		// console.log('data in one coin render is ', this.state.data)
 		let roi = (commaNumber(this.state.data.return_on_investment_percent) * 100).toFixed(2);
 		let return_on_investment_dollars = (this.state.data.return_on_investment_dollars).toFixed(2);
 		let net_present_value = (this.state.data.net_present_value).toFixed(2);

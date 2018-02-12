@@ -7,16 +7,15 @@ import {
   Button, ButtonGroup,
   Modal, ModalHeader, ModalBody,
   Row, Col,
-  Card, CardTitle, CardText, CardImg, CardBody, CardSubtitle, CardImgOverlay, CardGroup,
   ListGroup, ListGroupItem } from 'reactstrap';
 import Login from './Login';
 import Signup from './Signup';
 import DesktopImg from '../Assets/desktop_mockup.png'
 // import Background from '../Assets/milky-way-2695569_1280.jpg'
-import Iphone from '../Assets/iPhone.png'
-import News from '../Assets/news.png';
-import OneCoinImg from '../Assets/onecoin.png';
-import PortfolioImg from '../Assets/portfolio.png';
+// import Iphone from '../Assets/iPhone.png'
+// import News from '../Assets/news.png';
+// import OneCoinImg from '../Assets/onecoin.png';
+// import PortfolioImg from '../Assets/portfolio.png';
 
 class Landing extends Component {
 

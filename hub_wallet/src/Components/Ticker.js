@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import commaNumber from 'comma-number';
 
-import Sidebar from './Sidebar';
 import MarketTable from './MarketTable';
 
 const URL = "https://api.coinmarketcap.com/v1/ticker/?limit=0";
@@ -33,7 +31,7 @@ class Ticker extends Component {
 		axios.get(this.state.url)
 		.then(data => {
 			this.setState({ tickerData: data.data, dataReceived: true});
-			console.log('data from ticker is', data.data);
+			// console.log('data from ticker is', data.data);
 		})
 	}
 
@@ -41,7 +39,7 @@ class Ticker extends Component {
 		axios.get(this.state.marketUrl)
 		.then(data => {
 			this.setState({ marketData: data.data });
-			console.log('data from market is', data.data);
+			// console.log('data from market is', data.data);
 		})
 	}
 
@@ -49,7 +47,7 @@ class Ticker extends Component {
 		// console.log('table data in render is', this.state.tableData);
 		return(
 					<div className="col-lg-8 content mt-3 mb-5">
-						<div class="column">
+						<div className="column">
 	        	<div className="dashhead">
 									<div className="dashhead-titles">
 									    <h6 className="dashhead-subtitle">Hub</h6>

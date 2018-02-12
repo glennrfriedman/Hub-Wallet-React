@@ -11,6 +11,9 @@ import Portfolio from './Portfolio';
 import Ticker from './Ticker';
 import News from './News';
 import Sidebar from './Sidebar';
+require('dotenv').config()
+let url = process.env.REACT_APP_URL;
+// console.log('url is', url)
 
 class UserAuth extends Component {
    
@@ -18,7 +21,7 @@ class UserAuth extends Component {
     super();
     this.state = {
       user: false,
-      url: 'http://localhost:8080',
+      url: url,
       mode: 'landing',
       userLoggedIn: false,
       isOpen: false, 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import {Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
 // import commaNumber from 'comma-number';
 import { Link } from 'react-router-dom';
@@ -77,7 +76,7 @@ class Sidebar extends Component {
   }
 
   render(){
-    console.log('props is sidebar are', this.props)
+    // console.log('props is sidebar are', this.props)
     return (
       <div id="sidebar" className="col-md-3 sidebar">
         <nav className="sidebar-nav">

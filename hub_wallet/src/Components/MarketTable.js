@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Input, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Table, Input, Breadcrumb } from 'reactstrap';
 import commaNumber from 'comma-number';
 import query from 'array-query';
 // import $ from 'jquery'
@@ -15,14 +15,14 @@ class MarketTable extends Component {
 		this.filterTable = this.filterTable.bind(this);
 	}
 
-	componentDidMount(){
-		// this.filterTable();
-		console.log('tickerData in Market Table is', this.state.data)
-	}
+	// componentDidMount(){
+	// 	// this.filterTable();
+	// 	console.log('tickerData in Market Table is', this.state.data)
+	// }
 
 	assignRowStyle(number){
-		let gain = {color: "#11E20C"}
-		let loss = {color: "#FF0215"}
+		let gain = {color: "#00B145"}
+		let loss = {color: "#FF312B"}
 		if (number > 0){
 			return gain;
 		}

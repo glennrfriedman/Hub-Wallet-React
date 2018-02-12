@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Pie, Bar, Doughnut } from 'react-chartjs-2';
 import commaNumber from 'comma-number';
-import Sidebar from './Sidebar';
 
 class Portfolio extends Component {
 
@@ -51,26 +50,18 @@ class Portfolio extends Component {
 					labels: [], 
 					datasets: [ { 
 						label: 'Investment', 
-						backgroundColor: "#4E6EB2",
-						data: []
-						// backgroundColor:[
-      //         'rgba(255, 99, 132, 0.6)',
-      //         'rgba(54, 162, 235, 0.6)',
-      //         'rgba(255, 206, 86, 0.6)',
-      //         'rgba(75, 192, 192, 0.6)',
-      //         'rgba(153, 102, 255, 0.6)',
-      //         'rgba(255, 159, 64, 0.6)',
-      //         'rgba(255, 99, 132, 0.6)']  
+						data: [],
+						backgroundColor: "#2E54C8"
 					},
 					{
 						label: 'Current Holdings', 
 						data: [],
-						backgroundColor: '#FFE130'
+						backgroundColor: '#FF7C26'
 					},
 					{ 
 						label: 'Return', 
 						data: [],
-						backgroundColor: "#37B237"
+						backgroundColor: "#100F12"
 					} ] };
 		this.state.data.savedCoinData.forEach(function(coin){
 				let investment = coin.investment.toFixed(2)
@@ -180,19 +171,6 @@ class Portfolio extends Component {
 											</div>
 													{this.state.mode === 'return' &&
 													<div className="row"> 
-													{/*<div style={style}>
-													<BarChart label width={750} height={550} data={data} stackOffset="sign"
-										            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-										       <XAxis dataKey="Coin"/>
-										       <YAxis/>
-										       <CartesianGrid strokeDasharray="3 3"/>
-										       <Tooltip/>
-										       <Legend/>
-										       <ReferenceLine y={0} stroke='#000'/>
-										       <Bar dataKey="Investment" fill="#1485CC" stackId="stack" />
-										       <Bar dataKey="Return" fill="#FFC551" stackId="stack" />
-										      </BarChart>
-										     	</div>*/}
 										     	<Bar
 											          data={this.state.barChartData}
 											          options={{

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 // import { request } from 'graphql-request';
-import axios from 'axios';
 import commaNumber from 'comma-number';
 // import AdSense from 'react-adsense';
-import Sidebar from './Sidebar';
 import Coincard from './Coincard';
 
 class Hub extends Component { 
@@ -27,8 +25,8 @@ class Hub extends Component {
 	}
 
 	assignRowStyle(number){
-		let gain = {color: "#11E20C"}
-		let loss = {color: "#FF0215"}
+		let gain = {color: "#00B145"}
+		let loss = {color: "#FF312B"}
 		if (number > 0){
 			return gain;
 		}
