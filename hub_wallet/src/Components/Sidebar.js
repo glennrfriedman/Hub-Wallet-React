@@ -109,13 +109,13 @@ class Sidebar extends Component {
                   )}
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user, delta: this.props.delta } }}><h5>Portfolio</h5></Link>
+                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user, delta: this.props.deltaIndicator } }}><h5>Portfolio</h5></Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/all_coins", getData: this.state.getData, state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData } }}><h5>Market Data</h5></Link>
+                <Link className="nav-link" to="/all_coins"><h5>Market Data</h5></Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/news", state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData, delta: this.props.delta } }}><h5>News</h5></Link>
+                <Link className="nav-link" to="/news"><h5>News</h5></Link>
               </li>
             </ul>
             <hr className="visible-xs mt-3"></hr>

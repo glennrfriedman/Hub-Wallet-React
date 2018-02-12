@@ -77,8 +77,6 @@ class Onecoin extends Component {
 		let { percent_change_1h, percent_change_24h, percent_change_7d } = this.state.data;
 		let price_per_share_change = (price_usd - price_per_share).toFixed(2);
 		return(
-			<div style={{margin: 1 + '%'}} className="row">
-				<Sidebar logout={this.props.logout} data={this.state.allCoinData} user={this.props.user} url={this.props.url} getData={this.props.routeProps.location.getData} />
 					<div className="col-md-7 content mt-3 mb-5">
 	        	<div className="dashhead">
 									  <div className="dashhead-titles">
@@ -164,7 +162,6 @@ class Onecoin extends Component {
 											</p>
 										</div>
 									</div>
-					</div>
 			)
 	}
 

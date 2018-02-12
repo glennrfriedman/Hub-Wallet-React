@@ -32,6 +32,7 @@ class UserAuth extends Component {
     this.logout = this.logout.bind(this);
     this.renderViews = this.renderViews.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.searchCoins = this.searchCoins.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
@@ -162,7 +163,7 @@ class UserAuth extends Component {
   renderViews(){
     return (
       <div className="row"> 
-        <Sidebar user={this.state.user} url={this.state.url} data={this.state.savedCoinData} logout={this.props.logout} displaySearchResults={this.displaySearchResults} searchCoins={this.searchCoins} handleChange={this.handleChange} searchResults={this.state.searchResults} searched={this.state.searched} clearSearch={this.clearSearch} getUserCoinData={this.getUserCoinData}/>
+        <Sidebar user={this.state.user} url={this.state.url} data={this.state.savedCoinData} logout={this.props.logout} displaySearchResults={this.displaySearchResults} searchCoins={this.searchCoins} handleChange={this.handleChange} searchResults={this.state.searchResults} searched={this.state.searched} clearSearch={this.clearSearch} getUserCoinData={this.getUserCoinData} deltaIndicator={this.state.deltaIndicator}/>
       <Switch>
         <Route path="/hub" render={props => this.requireUser(<Hub user={this.state.user} url={this.state.url} logout={this.logout} getUserCoinData={this.getUserCoinData} savedCoinData={this.state.savedCoinData} dataReceived={this.state.dataReceived} checkSign={this.checkSign} deltaIndicator={this.state.deltaIndicator} routeProps={props}/>)}/>
         <Route path="/coin/:coin_id" render={props => this.requireUser(<Onecoin user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
