@@ -22,8 +22,9 @@ class Addcoin extends Component {
 
   afterSaveCoin(){
     this.props.handleModal();
-    this.props.getData(this.props.user.id);
+    this.props.getUserCoinData();
     <Redirect to="/hub" />
+    return 
   }
 
   saveCoin(event) {

@@ -27,6 +27,11 @@ class Landing extends Component {
 		this.toggleModal = this.toggleModal.bind(this);
 	}
 
+  componentDidMount(){
+    document.getElementById('sidebar').style.display = "none";
+    // console.log('sidebar is ', sidebar); // let sidebar = 'none';
+  }
+
 	toggle(){
 		this.setState({
       isOpen: !this.state.isOpen
