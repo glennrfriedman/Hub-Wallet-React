@@ -17,7 +17,7 @@ class Ticker extends Component {
 			marketUrl: MARKETURL,
 			tickerData: [],
 			marketData: [],
-			allCoinData: this.props.routeProps.location.state.data,
+			// allCoinData: this.props.routeProps.location.state.data,
 			dataReceived: false
 		}
 		this.getTickerData = this.getTickerData.bind(this);
@@ -48,8 +48,6 @@ class Ticker extends Component {
 	render(){
 		// console.log('table data in render is', this.state.tableData);
 		return(
-			<div style={{margin: 1 + '%'}} className="row">
-				<Sidebar logout={this.props.logout} data={this.state.allCoinData} user={this.props.user} url={this.props.url} getData={this.props.routeProps.location.getData} />
 					<div className="col-lg-8 content mt-3 mb-5">
 						<div class="column">
 	        	<div className="dashhead">
@@ -65,7 +63,6 @@ class Ticker extends Component {
 	  			{this.state.dataReceived &&	
 	  					<MarketTable tickerData={this.state.tickerData} marketData={this.state.marketData} /> }
 	  		</div>
-	  	</div>
 			)
 	}
 

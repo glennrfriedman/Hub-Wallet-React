@@ -18,9 +18,6 @@ class News extends Component {
 		this.state = {
 			newsData: [],
 			dataReceived: false,
-			data: this.props.routeProps.location.state.data, 
-			// allCoinData: this.props.routeProps.location.state.allCoinData, 
-			deltaPort: this.props.routeProps.location.state.deltaPort
 		}
 		this.getNews = this.getNews.bind(this);
 		this.renderNews = this.renderNews.bind(this);
@@ -61,10 +58,8 @@ class News extends Component {
 	}
 
 	render(){
-		console.log('this.routeProps are', this.props.routeProps.location)
+		// console.log('this.routeProps are', this.props.routeProps.location)
 		return(
-		<div style={{margin: 1 + '%'}} className="row">
-				<Sidebar logout={this.props.logout} data={this.state.data} user={this.props.user} url={this.props.url} getData={this.props.routeProps.location.getData} />
 					<div className="col-lg-8 content mt-3 mb-5">
 						<div className="column">
 	        	<div className="dashhead">
@@ -84,8 +79,7 @@ class News extends Component {
 	  					<CardColumns>
 	  						{this.renderNews()}
 	  					</CardColumns>}
-	  				</div>
-	  	</div>
+	  			</div>
 			)
 	}
 

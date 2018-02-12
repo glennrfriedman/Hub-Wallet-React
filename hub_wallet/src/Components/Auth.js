@@ -10,6 +10,7 @@ import Onecoin from './Onecoin';
 import Portfolio from './Portfolio';
 import Ticker from './Ticker';
 import News from './News';
+import Sidebar from './Sidebar';
 
 class UserAuth extends Component {
    
@@ -18,19 +19,59 @@ class UserAuth extends Component {
     this.state = {
       user: false,
       url: 'http://localhost:8080',
+      mode: 'landing',
+      userLoggedIn: false,
       isOpen: false, 
-      modal: false
+      modal: false,
+      searched: false,
+      searchResults: [],
+      dataReceived: false,
+      savedCoinData: []
     }
     this.setUser = this.setUser.bind(this);
     this.logout = this.logout.bind(this);
     this.renderViews = this.renderViews.bind(this);
     this.toggle = this.toggle.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.searchCoins = this.searchCoins.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
+    this.getUserCoinData = this.getUserCoinData.bind(this);
+    this.checkSign = this.checkSign.bind(this);
   }
 
   componentDidMount() {
     this.initUser();
+    // let sidebar = document.getElementById('sidebar');
   }
+
+  getUserCoinData() {
+      axios.get(`${this.state.url}/api/${this.state.user.id}/coins`)
+        .then(data => {
+          // console.log('data is', data.data);
+          if (this.state.dataReceived === false){
+            this.setState({ savedCoinData: data.data, dataReceived: true })
+          }
+          else if (this.state.dataReceived === true){
+            this.setState({ savedCoinData: data.data })
+          }
+          this.checkSign();
+          }
+        )
+    }
+
+  checkSign(){
+      if (this.state.dataReceived === true){
+          if(this.state.savedCoinData.portfolio.total_roi_percent > 0){
+              this.setState({deltaIndicator: 'delta-indicator delta-positive'});
+              // return sign;
+              }
+          else if(this.state.savedCoinData.portfolio.total_roi_percent < 0){
+              this.setState({deltaIndicator: 'delta-indicator delta-negative'});
+            // return sign;
+            }
+      } 
+    }
 
   toggle(){
     this.setState({
@@ -42,6 +83,36 @@ class UserAuth extends Component {
     // console.log('event in toggleModal is', event.target.className);
     this.setState({
        modal: !this.state.modal
+    });
+  }
+
+  handleChange(event) {
+    console.log('value in handleChange is ', event.target.value);
+    event.preventDefault();
+    this.setState({
+      value: event.target.value, searched: true
+    }, this.searchCoins)
+  }
+
+  searchCoins() {
+    if (this.state.value === "") {
+      this.setState({searched: false})
+      return
+    }
+    else {
+    axios.get(`${this.state.url}/api/search/${this.state.value}`)
+    .then(res => {
+      this.setState({searchResults: res.data.searchResults})
+      // console.log('search results are ', res.data.searchResults);
+      })
+    }
+  }
+
+  clearSearch(){
+    this.setState({
+      searched: false,
+      value: "",
+      searchResults: []
     });
   }
 
@@ -68,8 +139,8 @@ class UserAuth extends Component {
     this.setState({ user: user }, () => {
       this.props.history.push(`/hub`);
     });
-    console.log(`this.state.user.email is ${this.state.user.email}`);
-    console.log(`this.state.user.id is ${this.state.user.id}`);
+    // console.log(`this.state.user.email is ${this.state.user.email}`);
+    // console.log(`this.state.user.id is ${this.state.user.id}`);
   }
 
   logout(){
@@ -91,21 +162,26 @@ class UserAuth extends Component {
 
   renderViews(){
     return (
+      <div className="row"> 
+        <Sidebar user={this.state.user} url={this.state.url} data={this.state.savedCoinData} logout={this.props.logout} displaySearchResults={this.displaySearchResults} searchCoins={this.searchCoins} handleChange={this.handleChange} searchResults={this.state.searchResults} searched={this.state.searched} clearSearch={this.clearSearch} getUserCoinData={this.getUserCoinData} deltaIndicator={this.state.deltaIndicator}/>
       <Switch>
-        <Route exact path="/" render={props => (<Landing user={this.state.user} setUser={this.setUser} logout={this.logout} url={this.state.url}/>)}/>
-        <Route path="/hub" render={props => this.requireUser(<Hub user={this.state.user} url={this.state.url} logout={this.logout} />)}/>
+        <Route path="/hub" render={props => this.requireUser(<Hub user={this.state.user} url={this.state.url} logout={this.logout} getUserCoinData={this.getUserCoinData} savedCoinData={this.state.savedCoinData} dataReceived={this.state.dataReceived} checkSign={this.checkSign} deltaIndicator={this.state.deltaIndicator} routeProps={props}/>)}/>
         <Route path="/coin/:coin_id" render={props => this.requireUser(<Onecoin user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
         <Route path="/portfolio" render={props => this.requireUser(<Portfolio user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
         <Route path="/all_coins" render={props => this.requireUser(<Ticker user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
         <Route path="/news" render={props => this.requireUser(<News user={this.state.user} url={this.state.url} logout={this.logout} routeProps={props}/>)}/>
       </Switch>
+      </div>
       )
   }
 
   render(){
+    // delta={this.state.deltaIndicator}
+    // getData={this.getData}
     return (
-      <div>
-      <div>{this.renderViews()}</div>
+      <div style={{margin: 1 + '%'}} className="cointaner">     
+        <Route exact path="/" render={props => (<Landing user={this.state.user} setUser={this.setUser} logout={this.logout} url={this.state.url}/>)}/>
+        {this.renderViews()}
       <div className="text-center p-3" style={{backgroundColor: "#f3f3f3"}}>
                 <div className="col sm-6">
                   <small>Hub Wallet is for informational purposes and should not be considered investment advice.</small><br></br>

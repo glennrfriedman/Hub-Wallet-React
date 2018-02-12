@@ -12,19 +12,12 @@ class Sidebar extends Component {
     this.state = {
       value: "",
       mode: 'hub',
-      searchResults: [],
-      searched: false,
-      show: false,
-      // showModal: 'hidden',
-      // modalClass: 'modal fade',
       toggleNav: "nav-toggleable-md collapse", 
       ariaNav: 'false',
       navButtonClass: "nav-toggler nav-toggler-md sidebar-toggler collapsed",
       modal: false, 
       isOpen: false
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.searchCoins = this.searchCoins.bind(this);
+    } 
     this.clickedCoin = this.clickedCoin.bind(this);
     this.handleModal = this.handleModal.bind(this);
     this.toggleNav = this.toggleNav.bind(this);
@@ -39,13 +32,11 @@ class Sidebar extends Component {
 
   clickedCoin(event){
     this.handleModal();
+    this.props.clearSearch();
     this.setState({
       coin: event.target.name, 
       coinId: event.target.id, 
-      symbol: event.target.value,
-      searched: false,
-      value: "",
-      searchResults: []
+      symbol: event.target.value
     });
      // }, () => console.log(this.state) )
   }
@@ -64,31 +55,10 @@ class Sidebar extends Component {
     this.setState({ modal: !this.state.modal })
   }
 
-  handleChange(event) {
-    event.preventDefault();
-    this.setState({
-      value: event.target.value, searched: true
-    }, this.searchCoins)
-  }
-
-  searchCoins() {
-    if (this.state.value === "") {
-      this.setState({searched: false})
-      return
-    }
-    else {
-    axios.get(`${this.props.url}/api/search/${this.state.value}`)
-    .then(res => {
-      this.setState({searchResults: res.data.searchResults})
-      // console.log('search results are ', res.data.searchResults);
-      })
-    }
-  }
-
   displaySearchResults() {
-    let results = this.state.searchResults
+    let results = this.props.searchResults
     let renderSearch = []
-    if (this.state.searchResults.length === 0) {
+    if (this.props.searchResults.length === 0) {
       return
     }
     else {
@@ -107,8 +77,9 @@ class Sidebar extends Component {
   }
 
   render(){
+    console.log('props is sidebar are', this.props)
     return (
-      <div className="col-md-3 sidebar">
+      <div id="sidebar" className="col-md-3 sidebar">
         <nav className="sidebar-nav">
           <div className="sidebar-header">
             <button onClick={this.toggleNav} className={this.state.navButtonClass} type="button" data-toggle="collapse" data-target="#nav" aria-expanded={this.state.ariaNav}>
@@ -122,11 +93,11 @@ class Sidebar extends Component {
           </div>
           <div className={this.state.toggleNav} id="nav">
             <form className="sidebar-form">
-              <input className="form-control" type="text" ref={el=>{this.search=el}} placeholder="Search Coins..." onChange={this.handleChange} />
-              <button onClick={this.handleChange} className="btn-link">
+              <input className="form-control" type="text" ref={el=>{this.search=el}} placeholder="Search Coins..." onChange={this.props.handleChange} />
+              <button onClick={this.props.handleChange} className="btn-link">
                 <span className="icon icon-magnifying-glass"></span>
               </button>
-              <ul className="list-group">{this.state.searched && this.displaySearchResults()}</ul>
+              <ul className="list-group">{this.props.searched && this.displaySearchResults()}</ul>
             </form>
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">{this.props.user.first_name} {this.props.user.last_name}'s Hub</li>
@@ -138,13 +109,13 @@ class Sidebar extends Component {
                   )}
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user, delta: this.props.delta } }}><h5>Portfolio</h5></Link>
+                <Link className="nav-link" to={{ pathname: "/portfolio", state: { data: this.props.data, user: this.props.user, delta: this.props.deltaIndicator } }}><h5>Portfolio</h5></Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/all_coins", getData: this.state.getData, state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData } }}><h5>Market Data</h5></Link>
+                <Link className="nav-link" to="/all_coins"><h5>Market Data</h5></Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={{ pathname: "/news", state: { data: this.props.data, user: this.props.user, allCoinData: this.props.allCoinData, delta: this.props.delta } }}><h5>News</h5></Link>
+                <Link className="nav-link" to="/news"><h5>News</h5></Link>
               </li>
             </ul>
             <hr className="visible-xs mt-3"></hr>
@@ -155,11 +126,10 @@ class Sidebar extends Component {
             </ul>
           </div>
         </nav>
-        {/*<Addcoin getData={this.props.getData} url={this.props.url} user={this.props.user} coinData={this.getCoinInfo} modalClass={this.state.modalClass} aria={this.state.aria} style={this.state.style} closeModal={this.closeModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} />*/}
         <Modal className="modal-sm" isOpen={this.state.modal} toggle={this.toggleIsOpen}>
           <ModalHeader toggle={this.handleModal}>Add {this.state.coin} ({this.state.symbol}) to Portfolio:</ModalHeader>
           <ModalBody style={{display: "flex", justifyContent: "center"}}>
-              <Addcoin getData={this.props.getData} url={this.props.url} user={this.props.user} handleModal={this.handleModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} click={this.clickedCoin} />
+              <Addcoin getUserCoinData={this.props.getUserCoinData} url={this.props.url} user={this.props.user} handleModal={this.handleModal} coin={this.state.coin} id={this.state.coinId} symbol={this.state.symbol} click={this.clickedCoin} />
           </ModalBody>
         </Modal>
       </div>
